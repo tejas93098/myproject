@@ -10,7 +10,14 @@ const PORT = process.env.PORT || 3001;
 const JWT_SECRET = 'your-super-secret-jwt-key-change-in-production';
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://unione-f.netlify.app",
+    "https://www.myunione.in",
+    "https://myunione.in"
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Database setup
