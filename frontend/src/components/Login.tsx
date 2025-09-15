@@ -1135,7 +1135,7 @@ const Login: React.FC = () => {
                 &copy; 2025 My UniOne Ltd. All rights reserved.
               </p>
               <div className="flex items-center gap-4 mt-4 sm:mt-0">
-                <span className="text-gray-400 text-sm">Powered by innovation</span>
+                <span className="text-gray-400 text-sm">Powered by MyUniOne</span>
               </div>
             </div>
           </div>
