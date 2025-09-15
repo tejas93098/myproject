@@ -29,7 +29,20 @@ import {
   School as SchoolIcon,
   Sparkles,
   Zap,
-  Target
+  Target,
+  ChevronDown,
+  Play,
+  Building,
+  Globe,
+  Lightbulb,
+  Rocket,
+  Heart,
+  Check,
+  ArrowUp,
+  FileText,
+  PieChart,
+  Megaphone,
+  UserCheck
 } from 'lucide-react';
 
 const Login: React.FC = () => {
@@ -49,7 +62,6 @@ const Login: React.FC = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isVisible, setIsVisible] = useState<{ [key: string]: boolean }>({});
 
-
   // Form data
   const [formData, setFormData] = useState({
     email: '',
@@ -59,8 +71,8 @@ const Login: React.FC = () => {
     otp: ['', '', '', '', '', ''],
   });
 
-  // Animated text effect for hero title
-  const heroWords = ['Empowering', 'Education', 'Through', 'Digital', 'Innovation'];
+  // Hero animated words
+  const heroWords = ['Empowering', 'Education', 'Excellence'];
   
   useEffect(() => {
     if (!showLogin && !showSchools) {
@@ -69,7 +81,7 @@ const Login: React.FC = () => {
           setAnimatedText(prev => prev + (prev ? ' ' : '') + heroWords[currentWordIndex]);
           setCurrentWordIndex(prev => prev + 1);
         }
-      }, currentWordIndex === 0 ? 500 : 300);
+      }, currentWordIndex === 0 ? 800 : 600);
 
       return () => clearTimeout(timer);
     }
@@ -197,365 +209,322 @@ const Login: React.FC = () => {
     setMobileMenuOpen(false);
   };
 
+  const handleRoleLogin = (role: 'parent' | 'teacher' | 'management') => {
+    setUserType(role);
+    setShowLogin(true);
+  };
+
   // Show Schools component
   if (showSchools) {
     return <School onBack={() => setShowSchools(false)} />;
   }
 
+  // Login Modal/Page
   if (showLogin) {
     return (
-      <div className="min-h-screen relative overflow-hidden">
-        {/* Animated Background Particles */}
+      <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
+        {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute top-40 left-40 w-80 h-80 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/10 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
         </div>
         
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 to-indigo-100/60"></div>
-        
-        {/* Content */}
-        <div className="relative z-10">
-          {/* Header */}
-          <header className="header bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-200 animate-slideDown">
-            <nav className="nav-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center h-16">
-                <div className="logo flex items-center cursor-pointer group" onClick={() => setShowLogin(false)}>
-                  <div className="logo-icon w-8 h-8 text-blue-600 mr-3 flex-shrink-0 group-hover:rotate-12 transition-transform duration-300">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                      <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                    </svg>
-                  </div>
-                  <span className="logo-text text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">My UniOne</span>
+        {/* Header */}
+        <header className="relative z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
+          <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex items-center cursor-pointer group" onClick={() => setShowLogin(false)}>
+                <div className="w-8 h-8 text-blue-600 mr-3 group-hover:rotate-12 transition-transform duration-300">
+                  <GraduationCap className="w-8 h-8" />
                 </div>
-                <button
-                  onClick={() => setShowLogin(false)}
-                  className="text-gray-600 hover:text-blue-600 flex items-center gap-2 text-sm sm:text-base group transition-all duration-300 hover:scale-105"
-                >
-                  <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
-                  <span className="hidden xs:inline">Back to Home</span>
-                  <span className="xs:hidden">Back</span>
-                </button>
+                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  My UniOne
+                </span>
               </div>
-            </nav>
-          </header>
+              <button
+                onClick={() => setShowLogin(false)}
+                className="text-gray-600 hover:text-blue-600 flex items-center gap-2 font-medium group transition-all duration-300"
+              >
+                <ArrowUp className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
+                Back to Home
+              </button>
+            </div>
+          </nav>
+        </header>
 
-          {/* Main Content */}
-          <main className="main-content flex items-center justify-center p-4 min-h-[calc(100vh-140px)]">
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md mx-auto animate-fadeInUp border border-white/20">
-              {/* Header */}
-              <div className="text-center mb-6 sm:mb-8">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full mb-4 animate-pulse">
-                  <GraduationCap className="w-8 h-8 text-blue-600 animate-bounce" />
+        {/* Login Content */}
+        <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
+          <div className="w-full max-w-md">
+            {/* Premium Login Card */}
+            <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
+              {/* Card Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-center">
+                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
+                  <GraduationCap className="w-8 h-8 text-white" />
                 </div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2 animate-slideUp">Welcome Back</h1>
-                <p className="text-gray-600 text-sm sm:text-base animate-slideUp animation-delay-200">Sign in to access your UNIONE account</p>
+                <h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
+                <p className="text-blue-100">Sign in to your My UniOne account</p>
               </div>
 
-              
-              {/* Role Selector */}
-<div className="flex bg-gray-100 rounded-lg p-1 mb-6">
-  <button
-    type="button"
-    onClick={() => setUserType('parent')}
-    className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md ${
-      userType === 'parent'
-        ? 'bg-white text-blue-600 shadow-sm'
-        : 'text-gray-600 hover:text-gray-900'
-    }`}
-  >
-    <Users className="w-4 h-4" />
-    Parent
-  </button>
-
-  <button
-    type="button"
-    onClick={() => setUserType('teacher')}
-    className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md ${
-      userType === 'teacher'
-        ? 'bg-white text-blue-600 shadow-sm'
-        : 'text-gray-600 hover:text-gray-900'
-    }`}
-  >
-    <User className="w-4 h-4" />
-    Teacher
-  </button>
-
-  <button
-    type="button"
-    onClick={() => setUserType('management')}
-    className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md ${
-      userType === 'management'
-        ? 'bg-white text-blue-600 shadow-sm'
-        : 'text-gray-600 hover:text-gray-900'
-    }`}
-  >
-    <Shield className="w-4 h-4" />
-    Management
-  </button>
-</div>
-
-
-              {/* Login Method Toggle */}
-              <div className="flex bg-gray-100 rounded-lg p-1 mb-6 animate-slideUp animation-delay-600">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setLoginMethod('mobile');
-                    setIsOtpSent(false);
-                  }}
-                  className={`flex-1 py-2 px-2 sm:px-4 rounded-md transition-all duration-300 text-xs sm:text-sm transform hover:scale-105 ${
-                    loginMethod === 'mobile'
-                      ? 'bg-white text-blue-600 shadow-sm scale-105'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Mobile OTP
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLoginMethod('email')}
-                  className={`flex-1 py-2 px-2 sm:px-4 rounded-md transition-all duration-300 text-xs sm:text-sm transform hover:scale-105 ${
-                    loginMethod === 'email'
-                      ? 'bg-white text-blue-600 shadow-sm scale-105'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Email & Password
-                </button>
-              </div>
-
-              {/* Login Forms */}
-              {loginMethod === 'mobile' ? (
-                <form onSubmit={handleMobileLogin} className="space-y-6 animate-slideUp animation-delay-800">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Mobile Number
-                    </label>
-                    <div className="flex">
-                      <select
-                        name="countryCode"
-                        value={formData.countryCode}
-                        onChange={handleInputChange}
-                        className="w-16 sm:w-20 px-2 sm:px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-all duration-300 focus:scale-105"
-                      >
-                        <option value="+91">+91</option>
-                        <option value="+1">+1</option>
-                        <option value="+44">+44</option>
-                        <option value="+86">+86</option>
-                      </select>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder="Enter mobile number"
-                        className="flex-1 px-3 py-2 border border-l-0 border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-all duration-300 focus:scale-105"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {isOtpSent && (
-                    <div className="animate-fadeIn">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Enter OTP
-                      </label>
-                      <div className="flex gap-1 sm:gap-2 mb-4 justify-center">
-                        {formData.otp.map((digit, index) => (
-                          <input
-                            key={index}
-                            id={`otp-${index}`}
-                            type="text"
-                            value={digit}
-                            onChange={(e) => handleOtpChange(index, e.target.value)}
-                            className="w-10 h-10 sm:w-12 sm:h-12 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-all duration-300 focus:scale-110 focus:border-blue-400"
-                            maxLength={1}
-                            required
-                          />
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        {otpTimer > 0 ? (
-                          <span className="text-gray-600 animate-pulse">
-                            Resend OTP in {otpTimer}s
-                          </span>
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={resendOtp}
-                            className="text-blue-600 hover:text-blue-800 transition-colors hover:underline"
-                          >
-                            Resend OTP
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-                  >
-                    <Phone className="w-4 h-4" />
-                    {isLoading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        Processing...
-                      </>
-                    ) : isOtpSent ? 'Verify OTP' : 'Send OTP'}
-                  </button>
-                </form>
-              ) : (
-                <form onSubmit={handleEmailLogin} className="space-y-6 animate-slideUp animation-delay-800">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder="Enter your email"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-all duration-300 focus:scale-105"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Password
-                    </label>
-                    <div className="relative">
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        name="password"
-                        value={formData.password}
-                        onChange={handleInputChange}
-                        placeholder="Enter your password"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm pr-10 transition-all duration-300 focus:scale-105"
-                        required
-                      />
+              <div className="p-6 space-y-6">
+                {/* Role Selector */}
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-gray-700">Select Your Role</label>
+                  <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 rounded-lg">
+                    {[
+                      { value: 'parent', icon: Users, label: 'Parent' },
+                      { value: 'teacher', icon: User, label: 'Teacher' },
+                      { value: 'management', icon: Shield, label: 'Admin' }
+                    ].map((role) => (
                       <button
+                        key={role.value}
                         type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 transition-colors"
+                        onClick={() => setUserType(role.value as any)}
+                        className={`flex flex-col items-center gap-1 py-3 px-2 rounded-md transition-all duration-200 ${
+                          userType === role.value
+                            ? 'bg-white text-blue-600 shadow-sm scale-105'
+                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                        }`}
                       >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                        <role.icon className="w-4 h-4" />
+                        <span className="text-xs font-medium">{role.label}</span>
                       </button>
-                    </div>
+                    ))}
                   </div>
-
-                  <button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-                  >
-                    <Mail className="w-4 h-4" />
-                    {isLoading ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                        Signing in...
-                      </>
-                    ) : 'Sign In'}
-                  </button>
-                </form>
-              )}
-            </div>
-          </main>
-
-          {/* Footer */}
-          <footer className="footer bg-white/95 backdrop-blur-sm border-t border-gray-200">
-            <div className="footer-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div className="footer-section text-center sm:text-left">
-                  <div className="footer-logo flex items-center justify-center sm:justify-start mb-4">
-                    <div className="logo-icon w-8 h-8 text-blue-600 mr-3 flex-shrink-0">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-900">My UniOne</h3>
-                  </div>
-                  <p className="text-gray-600 text-sm sm:text-base">Connecting parents, students, and teachers for better educational outcomes through innovative digital solutions.</p>
                 </div>
-                <div className="footer-section text-center sm:text-left">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h4>
-                  <ul className="space-y-2">
-                    <li><button onClick={() => scrollToSection('home')} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-colors">Home</button></li>
-                    <li><button onClick={() => scrollToSection('features')} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-colors">Features</button></li>
-                    <li><button onClick={() => scrollToSection('about')} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-colors">About Us</button></li>
-                    <li><button onClick={() => setShowSchools(true)} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-colors">Schools</button></li>
-                    <li><button onClick={() => setShowLogin(true)} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-colors">Login</button></li>
-                  </ul>
-                </div>
-                <div className="footer-section text-center sm:text-left sm:col-span-2 lg:col-span-1">
-                  <h4 className="text-lg font-semibold text-gray-900 mb-4">Contact Us</h4>
-                  <div className="contact-info space-y-2">
-                    <div className="contact-item text-gray-600 text-sm sm:text-base">Greater Noida, India</div>
-                    <div className="contact-item text-gray-600 text-sm sm:text-base">support@My UniOne.edu</div>
-                    <div className="contact-item text-gray-600 text-sm sm:text-base">+91 98765 43210</div>
+
+                {/* Login Method Toggle */}
+                <div className="space-y-3">
+                  <label className="block text-sm font-semibold text-gray-700">Login Method</label>
+                  <div className="flex bg-gray-100 rounded-lg p-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLoginMethod('mobile');
+                        setIsOtpSent(false);
+                      }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md transition-all duration-200 ${
+                        loginMethod === 'mobile'
+                          ? 'bg-white text-blue-600 shadow-sm'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                    >
+                      <Phone className="w-4 h-4" />
+                      <span className="text-sm font-medium">Mobile OTP</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setLoginMethod('email')}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md transition-all duration-200 ${
+                        loginMethod === 'email'
+                          ? 'bg-white text-blue-600 shadow-sm'
+                          : 'text-gray-600 hover:text-gray-900'
+                      }`}
+                    >
+                      <Mail className="w-4 h-4" />
+                      <span className="text-sm font-medium">Email</span>
+                    </button>
                   </div>
+                </div>
+
+                {/* Login Forms */}
+                {loginMethod === 'mobile' ? (
+                  <form onSubmit={handleMobileLogin} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
+                      <div className="flex">
+                        <select
+                          name="countryCode"
+                          value={formData.countryCode}
+                          onChange={handleInputChange}
+                          className="w-20 px-3 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                        >
+                          <option value="+91">+91</option>
+                          <option value="+1">+1</option>
+                          <option value="+44">+44</option>
+                        </select>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          placeholder="Enter mobile number"
+                          className="flex-1 px-3 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    {isOtpSent && (
+                      <div className="animate-fadeIn">
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Enter OTP</label>
+                        <div className="flex gap-2 mb-4 justify-center">
+                          {formData.otp.map((digit, index) => (
+                            <input
+                              key={index}
+                              id={`otp-${index}`}
+                              type="text"
+                              value={digit}
+                              onChange={(e) => handleOtpChange(index, e.target.value)}
+                              className="w-12 h-12 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold"
+                              maxLength={1}
+                              required
+                            />
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-center">
+                          {otpTimer > 0 ? (
+                            <span className="text-gray-600 text-sm">Resend OTP in {otpTimer}s</span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={resendOtp}
+                              className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+                            >
+                              Resend OTP
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-300"
+                    >
+                      {isLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                          Processing...
+                        </>
+                      ) : isOtpSent ? 'Verify OTP' : 'Send OTP'}
+                    </button>
+                  </form>
+                ) : (
+                  <form onSubmit={handleEmailLogin} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Enter your email"
+                        className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                      <div className="relative">
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          name="password"
+                          value={formData.password}
+                          onChange={handleInputChange}
+                          placeholder="Enter your password"
+                          className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
+                          required
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                        >
+                          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-300"
+                    >
+                      {isLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                          Signing in...
+                        </>
+                      ) : 'Sign In'}
+                    </button>
+                  </form>
+                )}
+
+                {/* Footer */}
+                <div className="text-center text-sm text-gray-600 pt-4 border-t border-gray-200">
+                  <p>Secure login powered by My UniOne</p>
                 </div>
               </div>
             </div>
-            <div className="footer-bottom border-t border-gray-200 py-4">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p className="text-center text-gray-600 text-sm">&copy; 2025 My UniOne Ltd. All rights reserved.</p>
-              </div>
-            </div>
-          </footer>
+          </div>
         </div>
       </div>
     );
   }
 
+  // Main Landing Page
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      {/* Header */}
-      <header className="header bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-200 fixed w-full z-50 animate-slideDown">
-        <nav className="nav-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Navigation */}
+      <header className="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="logo flex items-center flex-shrink-0 group">
-              <div className="logo-icon w-8 h-8 text-blue-600 mr-3 group-hover:rotate-12 transition-transform duration-300">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                </svg>
+            {/* Logo */}
+            <div className="flex items-center group cursor-pointer">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                <GraduationCap className="w-6 h-6 text-white" />
               </div>
-              <span className="logo-text text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">My UniOne</span>
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                My UniOne
+              </span>
             </div>
             
             {/* Desktop Navigation */}
-            <ul className="nav-menu hidden md:flex space-x-6 lg:space-x-8 items-center">
-              <li><button onClick={() => scrollToSection('home')} className="nav-link1 text-gray-700 hover:text-blue-600 transition-all duration-300 text-sm lg:text-base relative group">
+            <div className="hidden md:flex items-center space-x-8">
+              <button onClick={() => scrollToSection('home')} className="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
                 Home
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </button></li>
-              <li><button onClick={() => scrollToSection('features')} className="nav-link1 text-gray-700 hover:text-blue-600 transition-all duration-300 text-sm lg:text-base relative group">
-                Features
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </button></li>
-              <li><button onClick={() => scrollToSection('about')} className="nav-link1 text-gray-700 hover:text-blue-600 transition-all duration-300 text-sm lg:text-base relative group">
+              </button>
+              <button onClick={() => scrollToSection('about')} className="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
                 About Us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </button></li>
-              <li><button onClick={() => setShowSchools(true)} className="nav-link1 text-gray-700 hover:text-blue-600 transition-all duration-300 text-sm lg:text-base flex items-center gap-1 relative group">
-                Schools
+              </button>
+              <button onClick={() => scrollToSection('features')} className="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
+                Features
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-              </button></li>
-              <li><button onClick={() => setShowLogin(true)} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 text-sm lg:text-base transform hover:scale-105 hover:shadow-lg">Login</button></li>
-            </ul>
+              </button>
+              <button onClick={() => scrollToSection('dashboards')} className="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
+                Dashboards
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+              <button onClick={() => scrollToSection('contact')} className="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors relative group">
+                Contact
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+              </button>
+              <button 
+              onClick={() => setShowSchools(true)} 
+              className="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors relative group"
+            >
+              Schools
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
+            </button>
+
+              <button
+                onClick={() => setShowLogin(true)}
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Login
+              </button>
+            </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-gray-700 hover:text-blue-600 p-2 transition-all duration-300 hover:scale-110"
+              className="md:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -563,15 +532,14 @@ const Login: React.FC = () => {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <div className="md:hidden bg-white/95 backdrop-blur-sm border-t border-gray-200 py-4 absolute left-0 right-0 top-16 shadow-lg animate-slideDown">
+            <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-200 py-4">
               <div className="flex flex-col space-y-4 px-4">
-                <button onClick={() => scrollToSection('home')} className="text-left text-gray-700 hover:text-blue-600 transition-colors py-2 hover:pl-2 duration-300">Home</button>
-                <button onClick={() => scrollToSection('features')} className="text-left text-gray-700 hover:text-blue-600 transition-colors py-2 hover:pl-2 duration-300">Features</button>
-                <button onClick={() => scrollToSection('about')} className="text-left text-gray-700 hover:text-blue-600 transition-colors py-2 hover:pl-2 duration-300">About Us</button>
-                <button onClick={() => setShowSchools(true)} className="text-left text-gray-700 hover:text-blue-600 transition-colors py-2 flex items-center gap-2 hover:pl-2 duration-300">
-                  Schools
-                </button>
-                <button onClick={() => setShowLogin(true)} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 w-full text-center transform hover:scale-105">Login</button>
+                <button onClick={() => scrollToSection('home')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors">Home</button>
+                <button onClick={() => scrollToSection('about')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors">About Us</button>
+                <button onClick={() => scrollToSection('features')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors">Features</button>
+                <button onClick={() => scrollToSection('dashboards')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors">Dashboards</button>
+                <button onClick={() => scrollToSection('contact')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors">Contact</button>
+                <button onClick={() => setShowLogin(true)} className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg font-semibold text-center">Login</button>
               </div>
             </div>
           )}
@@ -580,202 +548,308 @@ const Login: React.FC = () => {
 
       {/* Hero Section */}
       <section id="home" className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-        {/* Animated Background Elements */}
+        {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute top-40 left-40 w-80 h-80 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-indigo-400/20 to-pink-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-cyan-400/10 to-blue-400/10 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
         </div>
-        
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/60"></div>
         
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight">
-              <span className="inline-block">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-8 animate-fadeIn">
+              <Sparkles className="w-4 h-4" />
+              India's Leading EdTech Platform
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              <span className="block">
                 {animatedText.split(' ').map((word, index) => (
                   <span
                     key={index}
-                    className={`inline-block mr-2 ${index < currentWordIndex ? 'animate-slideInLeft' : 'opacity-0'}`}
-                    style={{ animationDelay: `${index * 300}ms` }}
+                    className={`inline-block mr-2 ${index < currentWordIndex ? 'animate-slideInUp' : 'opacity-0'}`}
+                    style={{ animationDelay: `${index * 600}ms` }}
                   >
                     {word}
                   </span>
                 ))}
               </span>
               {currentWordIndex >= heroWords.length && (
-                <span className="text-blue-300 block animate-slideInUp animation-delay-1500">
-                  <span className="inline-flex items-center gap-2">
-                    <Sparkles className="w-8 h-8 animate-pulse" />
-                    Digital Innovation
-                    <Zap className="w-8 h-8 animate-bounce" />
-                  </span>
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent block animate-slideInUp animation-delay-2000">
+                  Through Innovation
                 </span>
               )}
             </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-6 sm:mb-8 leading-relaxed px-4 animate-fadeInUp animation-delay-2000">
-              My UniOne bridges the gap between schools, teachers, and parents with comprehensive digital solutions for modern education management.
+
+            {/* Subtitle */}
+            <p className="text-xl sm:text-2xl text-gray-600 mb-8 leading-relaxed animate-fadeInUp animation-delay-2500">
+              Transforming schools with comprehensive digital solutions that connect teachers, parents, and students for exceptional educational outcomes.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4 animate-fadeInUp animation-delay-2500">
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fadeInUp animation-delay-3000">
               <button 
                 onClick={() => setShowLogin(true)}
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
               >
                 <span className="flex items-center justify-center gap-2">
-                  Get Started Today
+                  Start Your Journey
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
               <button 
                 onClick={() => scrollToSection('features')}
-                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all duration-300 transform hover:scale-105 group"
+                className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl text-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all duration-300 transform hover:scale-105 group"
               >
                 <span className="flex items-center justify-center gap-2">
-                  <Target className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-                  Explore Features
+                  <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  Explore Platform
                 </span>
               </button>
             </div>
-          </div>
-        </div>
 
-        {/* Floating Animation Elements */}
-        <div className="hidden lg:block absolute top-20 left-10 animate-float">
-          <div className="w-16 h-16 bg-blue-400/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10">
-            <BookOpen className="w-8 h-8 text-blue-300" />
+            {/* Trust Indicators */}
+            <div className="flex items-center justify-center gap-8 text-sm text-gray-600 animate-fadeInUp animation-delay-3500">
+              <div className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-green-600" />
+                <span>100% Secure</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5 text-blue-600" />
+                <span>24/7 Support</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-purple-600" />
+                <span>Award Winning</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="hidden lg:block absolute top-40 right-20 animate-float animation-delay-1000">
-          <div className="w-12 h-12 bg-indigo-400/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10">
-            <GraduationCap className="w-6 h-6 text-indigo-300" />
+      </section>
+
+      {/* About Us Section */}
+      <section id="about" className="py-20 bg-white relative overflow-hidden" data-animate>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.about ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+              About <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">My UniOne</span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We're revolutionizing education management with innovative digital solutions that create seamless connections between all stakeholders.
+            </p>
           </div>
-        </div>
-        <div className="hidden lg:block absolute bottom-40 left-20 animate-float animation-delay-2000">
-          <div className="w-14 h-14 bg-purple-400/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/10">
-            <Users className="w-7 h-7 text-purple-300" />
+
+          {/* Mission & Vision */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+            {/* Mission */}
+            <div className={`transition-all duration-1000 ${isVisible.about ? 'animate-slideInLeft' : 'opacity-0 -translate-x-10'}`}>
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mb-6">
+                  <Target className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  To empower educational institutions with comprehensive digital tools that streamline operations, enhance communication, and create exceptional learning environments where every student can thrive.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-green-600" />
+                    <span className="text-gray-700">Seamless school management</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-green-600" />
+                    <span className="text-gray-700">Enhanced parent-teacher collaboration</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="w-5 h-5 text-green-600" />
+                    <span className="text-gray-700">Student-centric approach</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Vision */}
+            <div className={`transition-all duration-1000 ${isVisible.about ? 'animate-slideInRight' : 'opacity-0 translate-x-10'}`}>
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl flex items-center justify-center mb-6">
+                  <Lightbulb className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  To become the global leader in educational technology by creating innovative solutions that transform traditional learning environments into dynamic, connected ecosystems.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3">
+                    <Rocket className="w-5 h-5 text-purple-600" />
+                    <span className="text-gray-700">Innovation-driven solutions</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Globe className="w-5 h-5 text-purple-600" />
+                    <span className="text-gray-700">Global educational impact</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Heart className="w-5 h-5 text-purple-600" />
+                    <span className="text-gray-700">Student success focus</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Key Highlights */}
+          <div className={`transition-all duration-1000 ${isVisible.about ? 'animate-fadeInUp animation-delay-500' : 'opacity-0 translate-y-10'}`}>
+            <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Why Schools Choose My UniOne</h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  icon: Shield,
+                  title: "Enterprise Security",
+                  description: "Bank-level security with end-to-end encryption and compliance standards",
+                  color: "from-blue-600 to-cyan-600"
+                },
+                {
+                  icon: Users,
+                  title: "Seamless Collaboration",
+                  description: "Unified platform connecting teachers, parents, and students effectively",
+                  color: "from-green-600 to-emerald-600"
+                },
+                {
+                  icon: TrendingUp,
+                  title: "Data-Driven Insights",
+                  description: "Advanced analytics and reporting for informed decision making",
+                  color: "from-purple-600 to-violet-600"
+                },
+                {
+                  icon: Clock,
+                  title: "24/7 Support",
+                  description: "Round-the-clock technical support and training assistance",
+                  color: "from-orange-600 to-red-600"
+                }
+              ].map((highlight, index) => (
+                <div
+                  key={index}
+                  className="group text-center hover:scale-105 transition-all duration-300 cursor-pointer"
+                >
+                  <div className={`w-16 h-16 bg-gradient-to-r ${highlight.color} rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <highlight.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
+                    {highlight.title}
+                  </h4>
+                  <p className="text-gray-600 leading-relaxed">
+                    {highlight.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-12 sm:py-16 lg:py-20 bg-gray-50 relative overflow-hidden" data-animate>
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${isVisible.features ? 'animate-slideUp' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                Comprehensive School Management
-              </span>
+      <section id="features" className="py-20 bg-gray-50 relative overflow-hidden" data-animate>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.features ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+              Comprehensive <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Features</span>
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              Our platform provides all the tools needed to streamline school operations and enhance communication between all stakeholders.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Everything you need to manage your educational institution efficiently and effectively
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Feature Cards with Staggered Animation */}
+          {/* Features Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 icon: ClipboardCheck,
-                title: "Attendance Management",
-                description: "Effortlessly track and manage student attendance with real-time updates and automated notifications to parents.",
-                features: ["Digital attendance tracking"],
-                color: "blue",
-                delay: "0"
+                title: "Smart Attendance",
+                description: "Digital attendance tracking with real-time notifications and automated reports",
+                features: ["QR Code scanning", "Automated reports", "Parent notifications"],
+                color: "from-blue-600 to-cyan-600"
               },
               {
                 icon: BarChart3,
                 title: "Grade Management",
-                description: "Comprehensive grading system with detailed analytics and progress tracking for better student assessment.",
-                features: ["Digital gradebook"],
-                color: "green",
-                delay: "200"
+                description: "Comprehensive grading system with analytics and progress tracking",
+                features: ["Digital gradebook", "Performance analytics", "Progress reports"],
+                color: "from-green-600 to-emerald-600"
+              },
+              {
+                icon: MessageCircle,
+                title: "Communication Hub",
+                description: "Seamless messaging between teachers, parents, and students",
+                features: ["Real-time messaging", "Group chats", "File sharing"],
+                color: "from-purple-600 to-violet-600"
               },
               {
                 icon: Calendar,
                 title: "Schedule Management",
-                description: "Create and manage class schedules, assignments, and important events with automated reminders.",
-                features: ["Interactive calendar"],
-                color: "purple",
-                delay: "400"
-              },
-              {
-                icon: MessageCircle,
-                title: "Feedback System",
-                description: "Streamlined communication between teachers and parents with detailed feedback and progress reports.",
-                features: ["Real-time messaging"],
-                color: "orange",
-                delay: "600"
+                description: "Interactive calendar with assignments, events, and reminders",
+                features: ["Class timetables", "Event calendar", "Assignment tracking"],
+                color: "from-orange-600 to-red-600"
               },
               {
                 icon: CreditCard,
                 title: "Fee Management",
-                description: "Complete fee management system with Payment Structure, receipts, and automated reminders.",
-                features: ["Payment Structure"],
-                color: "red",
-                delay: "800"
+                description: "Complete fee collection system with online payments",
+                features: ["Online payments", "Fee tracking", "Receipt generation"],
+                color: "from-pink-600 to-rose-600"
+              },
+              {
+                icon: FileText,
+                title: "Assignment Portal",
+                description: "Create, distribute, and grade assignments digitally",
+                features: ["Digital submissions", "Auto-grading", "Plagiarism check"],
+                color: "from-indigo-600 to-blue-600"
+              },
+              {
+                icon: PieChart,
+                title: "Analytics Dashboard",
+                description: "Comprehensive insights and performance analytics",
+                features: ["Student analytics", "Class performance", "Trend analysis"],
+                color: "from-teal-600 to-cyan-600"
+              },
+              {
+                icon: Megaphone,
+                title: "Announcements",
+                description: "Broadcast important updates and news instantly",
+                features: ["School-wide alerts", "Targeted messaging", "Read receipts"],
+                color: "from-yellow-600 to-orange-600"
               },
               {
                 icon: Shield,
-                title: "Communication System",
-                description: "Seamless messaging between teachers and parents",
-                features: ["Real-time Messaging"],
-                color: "indigo",
-                delay: "1000"
-              },
-              {
-                icon: BookOpen,
-                title: "Assignment Section",
-                description: "Create, track, and grade assignments efficiently",
-                features: ["Assignment Creation"],
-                color: "pink",
-                delay: "1200"
-              },
-              {
-                icon: Star,
-                title: "Announcement Management",
-                description: "Broadcast important updates and news",
-                features: ["School-wide Alerts"],
-                color: "yellow",
-                delay: "1400"
-              },
-              {
-                icon: Shield,
-                title: "Secure Access",
-                description: "Role-based access control ensuring data privacy and security for all users in the system.",
-                features: ["Multi-factor authentication"],
-                color: "teal",
-                delay: "1600"
+                title: "Security & Privacy",
+                description: "Enterprise-grade security with role-based access control",
+                features: ["Data encryption", "Role management", "Audit logs"],
+                color: "from-gray-600 to-slate-600"
               }
             ].map((feature, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 group cursor-pointer border border-gray-100 ${
+                className={`bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 group border border-gray-100 ${
                   isVisible.features ? 'animate-slideUp' : 'opacity-0 translate-y-10'
                 }`}
-                style={{ animationDelay: feature.delay + 'ms' }}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className={`w-16 h-16 bg-${feature.color}-100 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className={`w-8 h-8 text-${feature.color}-600 group-hover:animate-pulse`} />
+                <div className={`w-16 h-16 bg-gradient-to-r ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <feature.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 mb-6 text-sm sm:text-base leading-relaxed">
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   {feature.description}
                 </p>
-                <ul className="space-y-2 text-sm text-gray-500">
+                <ul className="space-y-2">
                   {feature.features.map((item, idx) => (
-                    <li key={idx} className="flex items-center group-hover:text-gray-700 transition-colors">
-                      <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 group-hover:scale-110 transition-transform" />
+                    <li key={idx} className="flex items-center text-sm text-gray-500 group-hover:text-gray-700 transition-colors">
+                      <CheckCircle className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -786,32 +860,104 @@ const Login: React.FC = () => {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative overflow-hidden" data-animate id="stats">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 animate-pulse"></div>
-        </div>
-
+      {/* Dashboard Access Section */}
+      <section id="dashboards" className="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative overflow-hidden" data-animate>
+        <div className="absolute inset-0 bg-black/10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className={`grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center transition-all duration-1000 ${isVisible.stats ? 'animate-slideUp' : 'opacity-0 translate-y-10'}`}>
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.dashboards ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+              Access Your Dashboard
+            </h2>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Choose your role to access the personalized dashboard designed for your specific needs
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { number: "100+", label: "Schools Connected", delay: "0" },
-              { number: "5K+", label: "Active Students", delay: "200" },
-              { number: "1K+", label: "Teachers", delay: "400" },
-              { number: "99.9%", label: "Uptime", delay: "600" }
+              {
+                role: 'teacher',
+                icon: UserCheck,
+                title: 'Teacher Dashboard',
+                description: 'Comprehensive tools for managing classes, assignments, grades, and student communication',
+                features: ['Class Management', 'Grade Book', 'Attendance Tracking', 'Parent Communication'],
+                color: 'from-green-500 to-emerald-500'
+              },
+              {
+                role: 'parent',
+                icon: Users,
+                title: 'Parent Dashboard',
+                description: 'Stay connected with your child\'s educational journey and school activities',
+                features: ['Child\'s Progress', 'Attendance Records', 'Fee Payment', 'Teacher Communication'],
+                color: 'from-blue-500 to-cyan-500'
+              },
+              {
+                role: 'management',
+                icon: Shield,
+                title: 'Management Dashboard',
+                description: 'Complete school administration with analytics, reporting, and oversight tools',
+                features: ['School Analytics', 'Staff Management', 'Financial Reports', 'System Administration'],
+                color: 'from-purple-500 to-pink-500'
+              }
+            ].map((dashboard, index) => (
+              <div
+                key={index}
+                className={`bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-500 group ${
+                  isVisible.dashboards ? 'animate-slideUp' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ animationDelay: `${index * 200}ms` }}
+              >
+                <div className={`w-16 h-16 bg-gradient-to-r ${dashboard.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                  <dashboard.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-4">{dashboard.title}</h3>
+                <p className="text-blue-100 mb-6 leading-relaxed">{dashboard.description}</p>
+                
+                <ul className="space-y-2 mb-8">
+                  {dashboard.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center text-blue-100">
+                      <Check className="w-4 h-4 text-green-400 mr-3 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleRoleLogin(dashboard.role as any)}
+                  className={`w-full bg-gradient-to-r ${dashboard.color} text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 group-hover:from-white group-hover:to-white group-hover:text-gray-900`}
+                >
+                  Login as {dashboard.title.split(' ')[0]}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20 bg-white" data-animate id="stats">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center transition-all duration-1000 ${isVisible.stats ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
+            {[
+              { number: "500+", label: "Schools Connected", icon: SchoolIcon },
+              { number: "50K+", label: "Active Students", icon: Users },
+              { number: "5K+", label: "Teachers", icon: UserCheck },
+              { number: "99.9%", label: "Uptime", icon: Shield }
             ].map((stat, index) => (
               <div
                 key={index}
-                className={`text-white group cursor-pointer transition-all duration-500 hover:scale-110 ${
+                className={`group cursor-pointer transition-all duration-500 hover:scale-110 ${
                   isVisible.stats ? 'animate-slideUp' : 'opacity-0 translate-y-10'
                 }`}
-                style={{ animationDelay: stat.delay + 'ms' }}
+                style={{ animationDelay: `${index * 200}ms` }}
               >
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 group-hover:text-yellow-300 transition-colors duration-300 animate-countUp">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                  <stat.icon className="w-8 h-8 text-white" />
+                </div>
+                <div className="text-4xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                   {stat.number}
                 </div>
-                <div className="text-blue-200 text-sm sm:text-base group-hover:text-white transition-colors">
+                <div className="text-gray-600 group-hover:text-gray-800 transition-colors">
                   {stat.label}
                 </div>
               </div>
@@ -820,212 +966,178 @@ const Login: React.FC = () => {
         </div>
       </section>
 
-      {/* About Us Section */}
-      <section id="about" className="py-12 sm:py-16 lg:py-20 bg-white relative overflow-hidden" data-animate>
+      {/* Contact Section */}
+      <section id="contact" className="py-20 bg-gray-50" data-animate>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-12 sm:mb-16 transition-all duration-1000 ${isVisible.about ? 'animate-slideUp' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                About My UniOne
-              </span>
+          <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.contact ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+              Get In <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Touch</span>
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              We are passionate about transforming education through innovative technology solutions that connect schools, teachers, parents, and students.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Ready to transform your school's digital experience? Contact us today for a personalized demo
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-12 sm:mb-16">
-            <div className={`order-2 lg:order-1 transition-all duration-1000 ${isVisible.about ? 'animate-slideInLeft' : 'opacity-0 -translate-x-10'}`}>
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">Our Mission</h3>
-              <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
-                At My UniOne, we believe that education is the foundation of progress. Our mission is to empower educational institutions with cutting-edge digital tools that streamline administrative processes, enhance communication, and ultimately improve learning outcomes for students.
-              </p>
-              <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
-                We understand the challenges faced by modern schools in managing day-to-day operations while maintaining quality education. That's why we've developed a comprehensive platform that addresses every aspect of school management, from attendance tracking to fee collection.
-              </p>
-              <div className="flex items-center gap-4 group cursor-pointer hover:scale-105 transition-transform duration-300">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-blue-200 transition-colors">
-                  <TrendingUp className="w-6 h-6 text-blue-600 group-hover:animate-bounce" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">Continuous Innovation</h4>
-                  <p className="text-gray-600 text-sm sm:text-base">Always evolving to meet educational needs</p>
-                </div>
-              </div>
-            </div>
-            <div className={`order-1 lg:order-2 relative transition-all duration-1000 ${isVisible.about ? 'animate-slideInRight' : 'opacity-0 translate-x-10'}`}>
-              <div className="w-full h-64 sm:h-80 bg-gradient-to-br from-blue-100 to-indigo-200 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <GraduationCap className="w-16 h-16 sm:w-20 sm:h-20 text-blue-600 mx-auto mb-4 animate-bounce" />
-                  <p className="text-blue-800 font-semibold">Educational Technology</p>
-                </div>
-              </div>
-              <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 w-16 h-16 sm:w-24 sm:h-24 bg-blue-600 rounded-full flex items-center justify-center animate-pulse">
-                <Award className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
-              </div>
-            </div>
-          </div>
+          <div className="grid lg:grid-cols-2 gap-16">
+            {/* Contact Info */}
+            <div className={`transition-all duration-1000 ${isVisible.contact ? 'animate-slideInLeft' : 'opacity-0 -translate-x-10'}`}>
+              <div className="bg-white rounded-2xl p-8 shadow-sm">
+                <h3 className="text-2xl font-bold text-gray-900 mb-8">Contact Information</h3>
+                
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <Mail className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Email Us</h4>
+                      <p className="text-gray-600">support@myunione.edu</p>
+                    </div>
+                  </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
-            <div className={`relative transition-all duration-1000 ${isVisible.about ? 'animate-slideInLeft animation-delay-500' : 'opacity-0 -translate-x-10'}`}>
-              <div className="w-full h-64 sm:h-80 bg-gradient-to-br from-green-100 to-blue-200 rounded-2xl flex items-center justify-center">
-                <div className="text-center">
-                  <Users className="w-16 h-16 sm:w-20 sm:h-20 text-green-600 mx-auto mb-4 animate-pulse" />
-                  <p className="text-green-800 font-semibold">Team Collaboration</p>
-                </div>
-              </div>
-              <div className="absolute -top-4 -left-4 sm:-top-6 sm:-left-6 w-16 h-16 sm:w-24 sm:h-24 bg-green-600 rounded-full flex items-center justify-center animate-bounce">
-                <Users className="w-8 h-8 sm:w-12 sm:h-12 text-white" />
-              </div>
-            </div>
-            <div className={`transition-all duration-1000 ${isVisible.about ? 'animate-slideInRight animation-delay-500' : 'opacity-0 translate-x-10'}`}>
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">Our Vision</h3>
-              <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
-                We envision a future where technology seamlessly integrates with education, creating an ecosystem where teachers can focus on teaching, parents stay informed and engaged, and students receive the best possible educational experience.
-              </p>
-              <p className="text-base sm:text-lg text-gray-600 mb-4 sm:mb-6 leading-relaxed">
-                Our platform is designed to be intuitive, secure, and scalable, ensuring that schools of all sizes can benefit from our solutions. We're committed to supporting educational institutions in their digital transformation journey.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 group cursor-pointer hover:scale-105 transition-transform duration-300">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-green-200 transition-colors">
-                    <Clock className="w-6 h-6 text-green-600 group-hover:animate-spin" />
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Phone className="w-6 h-6 text-green-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Call Us</h4>
+                      <p className="text-gray-600">+91 98765 43210</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors">24/7 Support</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">Round-the-clock assistance for all users</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 group cursor-pointer hover:scale-105 transition-transform duration-300">
-                  <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 group-hover:bg-purple-200 transition-colors">
-                    <Star className="w-6 h-6 text-purple-600 group-hover:animate-pulse" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">Excellence Driven</h4>
-                    <p className="text-gray-600 text-sm sm:text-base">Committed to delivering the highest quality</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Company Values */}
-          <div className={`mt-16 sm:mt-20 transition-all duration-1000 ${isVisible.about ? 'animate-slideUp animation-delay-1000' : 'opacity-0 translate-y-10'}`}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8 sm:mb-12">Our Core Values</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {[
-                {
-                  icon: Shield,
-                  title: "Security & Privacy",
-                  description: "We prioritize the security and privacy of all user data with enterprise-grade protection and compliance standards.",
-                  color: "blue",
-                  delay: "0"
-                },
-                {
-                  icon: Users,
-                  title: "Collaboration",
-                  description: "Fostering seamless communication and collaboration between all stakeholders in the educational ecosystem.",
-                  color: "green",
-                  delay: "200"
-                },
-                {
-                  icon: TrendingUp,
-                  title: "Innovation",
-                  description: "Continuously evolving our platform with the latest technologies to meet changing educational needs.",
-                  color: "purple",
-                  delay: "400"
-                }
-              ].map((value, index) => (
-                <div
-                  key={index}
-                  className={`text-center group cursor-pointer hover:scale-105 transition-all duration-500 ${
-                    isVisible.about ? 'animate-slideUp' : 'opacity-0 translate-y-10'
-                  }`}
-                  style={{ animationDelay: (1000 + parseInt(value.delay)) + 'ms' }}
-                >
-                  <div className={`w-16 h-16 bg-${value.color}-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-${value.color}-200 transition-colors group-hover:scale-110`}>
-                    <value.icon className={`w-8 h-8 text-${value.color}-600 group-hover:animate-pulse`} />
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Building className="w-6 h-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">Visit Us</h4>
+                      <p className="text-gray-600">Greater Noida, Uttar Pradesh, India</p>
+                    </div>
                   </div>
-                  <h4 className={`text-lg sm:text-xl font-bold text-gray-900 mb-3 group-hover:text-${value.color}-600 transition-colors`}>
-                    {value.title}
-                  </h4>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    {value.description}
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-gray-200">
+                  <h4 className="font-semibold text-gray-900 mb-4">Business Hours</h4>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div className="flex justify-between">
+                      <span>Monday - Friday</span>
+                      <span>9:00 AM - 6:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Saturday</span>
+                      <span>10:00 AM - 4:00 PM</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sunday</span>
+                      <span>Closed</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Card */}
+            <div className={`transition-all duration-1000 ${isVisible.contact ? 'animate-slideInRight' : 'opacity-0 translate-x-10'}`}>
+              <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-8 text-white">
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Rocket className="w-10 h-10 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
+                  <p className="text-blue-100 mb-8 leading-relaxed">
+                    Join thousands of schools already using My UniOne to transform their educational experience.
                   </p>
+
+                  <div className="space-y-4">
+                    <button
+                      onClick={() => setShowLogin(true)}
+                      className="w-full bg-white text-blue-600 py-3 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
+                    >
+                      Start Free Trial
+                    </button>
+                    
+                    <button
+                      onClick={() => scrollToSection('features')}
+                      className="w-full border-2 border-white/30 text-white py-3 rounded-xl font-semibold hover:bg-white/10 transition-all duration-300"
+                    >
+                      Learn More
+                    </button>
+                  </div>
+
+                  <div className="mt-8 pt-8 border-t border-white/20">
+                    <div className="flex items-center justify-center gap-6 text-sm text-blue-100">
+                      <div className="flex items-center gap-2">
+                        <Check className="w-4 h-4" />
+                        <span>No Setup Fees</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Check className="w-4 h-4" />
+                        <span>24/7 Support</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative overflow-hidden" data-animate id="cta">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
-          <div className="absolute top-20 right-20 w-16 h-16 bg-white/10 rounded-full animate-float animation-delay-1000"></div>
-          <div className="absolute bottom-20 left-20 w-24 h-24 bg-white/10 rounded-full animate-float animation-delay-2000"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
-          <div className={`transition-all duration-1000 ${isVisible.cta ? 'animate-slideUp' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
-              Ready to Transform Your School?
-            </h2>
-            <p className="text-lg sm:text-xl text-blue-100 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 leading-relaxed">
-              Join thousands of schools already using My UniOne to streamline their operations and enhance educational outcomes.
-            </p>
-            <button 
-              onClick={() => setShowLogin(true)}
-              className="bg-white text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl inline-flex items-center gap-2 group"
-            >
-              Get Started Now
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="footer bg-white/95 backdrop-blur-sm border-t border-gray-200">
-        <div className="footer-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <div className="footer-section text-center sm:text-left">
-              <div className="footer-logo flex items-center justify-center sm:justify-start mb-4 group">
-                <div className="logo-icon w-8 h-8 text-blue-600 mr-3 flex-shrink-0 group-hover:rotate-12 transition-transform duration-300">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                  </svg>
+      <footer className="bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center mb-4">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mr-3">
+                  <GraduationCap className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">My UniOne</h3>
+                <span className="text-xl font-bold">My UniOne</span>
               </div>
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed">Connecting parents, students, and teachers for better educational outcomes through innovative digital solutions.</p>
+              <p className="text-gray-400 leading-relaxed">
+                Empowering education through innovative digital solutions that connect schools, teachers, parents, and students.
+              </p>
             </div>
-            <div className="footer-section text-center sm:text-left">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Quick Links</h4>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><button onClick={() => scrollToSection('home')} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-all duration-300 hover:translate-x-1">Home</button></li>
-                <li><button onClick={() => scrollToSection('features')} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-all duration-300 hover:translate-x-1">Features</button></li>
-                <li><button onClick={() => scrollToSection('about')} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-all duration-300 hover:translate-x-1">About Us</button></li>
-                <li><button onClick={() => setShowSchools(true)} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-all duration-300 hover:translate-x-1">Schools</button></li>
-                <li><button onClick={() => setShowLogin(true)} className="text-gray-600 hover:text-blue-600 text-sm sm:text-base transition-all duration-300 hover:translate-x-1">Login</button></li>
+                <li><button onClick={() => scrollToSection('home')} className="text-gray-400 hover:text-white transition-colors">Home</button></li>
+                <li><button onClick={() => scrollToSection('about')} className="text-gray-400 hover:text-white transition-colors">About Us</button></li>
+                <li><button onClick={() => scrollToSection('features')} className="text-gray-400 hover:text-white transition-colors">Features</button></li>
+                <li><button onClick={() => setShowLogin(true)} className="text-gray-400 hover:text-white transition-colors">Login</button></li>
               </ul>
             </div>
-            <div className="footer-section text-center sm:text-left sm:col-span-2 lg:col-span-1">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Contact Us</h4>
-              <div className="contact-info space-y-2">
-                <div className="contact-item text-gray-600 text-sm sm:text-base hover:text-blue-600 transition-colors cursor-pointer">Greater Noida, India</div>
-                <div className="contact-item text-gray-600 text-sm sm:text-base hover:text-blue-600 transition-colors cursor-pointer">support@My UniOne.edu</div>
-                <div className="contact-item text-gray-600 text-sm sm:text-base hover:text-blue-600 transition-colors cursor-pointer">+91 98765 43210</div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Dashboards</h4>
+              <ul className="space-y-2">
+                <li><button onClick={() => handleRoleLogin('teacher')} className="text-gray-400 hover:text-white transition-colors">Teacher Dashboard</button></li>
+                <li><button onClick={() => handleRoleLogin('parent')} className="text-gray-400 hover:text-white transition-colors">Parent Dashboard</button></li>
+                <li><button onClick={() => handleRoleLogin('management')} className="text-gray-400 hover:text-white transition-colors">Management Dashboard</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
+              <div className="space-y-2 text-gray-400">
+                <p>Greater Noida, India</p>
+                <p>support@myunione.edu</p>
+                <p>+91 98765 43210</p>
               </div>
             </div>
           </div>
-        </div>
-        <div className="footer-bottom border-t border-gray-200 py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-gray-600 text-sm">&copy; 2025 My UniOne Ltd. All rights reserved.</p>
+
+          <div className="border-t border-gray-800 pt-8 mt-8">
+            <div className="flex flex-col sm:flex-row justify-between items-center">
+              <p className="text-gray-400 text-sm">
+                &copy; 2025 My UniOne Ltd. All rights reserved.
+              </p>
+              <div className="flex items-center gap-4 mt-4 sm:mt-0">
+                <span className="text-gray-400 text-sm">Powered by innovation</span>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
