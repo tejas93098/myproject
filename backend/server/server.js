@@ -72,6 +72,47 @@ db.serialize(() => {
     )
   `);
 
+  // NEW: Assignments table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS assignments (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      teacher_id INTEGER NOT NULL,
+      teacher_name TEXT NOT NULL,
+      title TEXT NOT NULL,
+      description TEXT NOT NULL,
+      subject TEXT NOT NULL,
+      class_grade TEXT,
+      student_id INTEGER,
+      due_date TEXT NOT NULL,
+      total_marks INTEGER DEFAULT 100,
+      assignment_type TEXT DEFAULT 'homework' CHECK (assignment_type IN ('homework', 'project', 'test', 'quiz', 'lab')),
+      status TEXT DEFAULT 'assigned' CHECK (status IN ('assigned', 'submitted', 'graded', 'overdue')),
+      assigned_date TEXT DEFAULT (date('now')),
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (teacher_id) REFERENCES users(id),
+      FOREIGN KEY (student_id) REFERENCES students(id)
+    )
+  `);
+
+  // NEW: Assignment submissions table
+  db.run(`
+    CREATE TABLE IF NOT EXISTS assignment_submissions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      assignment_id INTEGER NOT NULL,
+      student_id INTEGER NOT NULL,
+      student_name TEXT NOT NULL,
+      submission_text TEXT,
+      submission_date TEXT DEFAULT (date('now')),
+      grade_received INTEGER,
+      feedback TEXT,
+      status TEXT DEFAULT 'submitted' CHECK (status IN ('submitted', 'graded', 'late')),
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (assignment_id) REFERENCES assignments(id),
+      FOREIGN KEY (student_id) REFERENCES students(id),
+      UNIQUE(assignment_id, student_id)
+    )
+  `);
+
   // Attendance table
   db.run(`
     CREATE TABLE IF NOT EXISTS attendance (
@@ -114,7 +155,7 @@ db.serialize(() => {
     )
   `);
 
-  // Academic Performance table - NEW
+  // Academic Performance table
   db.run(`
     CREATE TABLE IF NOT EXISTS academic_performance (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -255,6 +296,24 @@ db.serialize(() => {
     ('Rishabh verma', '12', 'rishabh.verma@school.com', '9876543215', 2)
   `);
 
+  // Insert demo assignments
+  db.run(`
+    INSERT OR IGNORE INTO assignments (id, teacher_id, teacher_name, title, description, subject, class_grade, due_date, total_marks, assignment_type) VALUES 
+    (1, 1, 'Priya Sanak', 'Algebra Problem Set', 'Complete exercises 1-20 from Chapter 5: Linear Equations. Show all working steps clearly.', 'Mathematics', '10', '2025-02-01', 50, 'homework'),
+    (2, 1, 'Priya Sanak', 'Science Project: Solar System', 'Create a 3D model of the solar system with a detailed report on each planet. Include interesting facts and recent discoveries.', 'Science', '10', '2025-02-15', 100, 'project'),
+    (3, 1, 'Priya Sanak', 'English Essay: Climate Change', 'Write a 500-word essay on the impact of climate change on your local community. Include solutions and personal actions.', 'English', '9', '2025-01-25', 25, 'homework'),
+    (4, 1, 'Priya Sanak', 'History Research: Ancient Civilizations', 'Research and present findings on one ancient civilization of your choice. Focus on their contributions to modern society.', 'History', '11', '2025-02-10', 75, 'project'),
+    (5, 1, 'Priya Sanak', 'Physics Lab Report', 'Complete the pendulum experiment and submit a detailed lab report with observations, calculations, and conclusions.', 'Physics', '11', '2025-01-30', 40, 'lab')
+  `);
+
+  // Insert demo assignment submissions
+  db.run(`
+    INSERT OR IGNORE INTO assignment_submissions (assignment_id, student_id, student_name, submission_text, grade_received, feedback, status) VALUES 
+    (1, 1, 'Shreyas Verma', 'Completed all 20 exercises with detailed solutions showing each step of solving linear equations.', 45, 'Excellent work! Clear methodology and accurate calculations. Keep it up!', 'graded'),
+    (1, 3, 'Aniket Salvi', 'Completed exercises 1-18, having difficulty with questions 19-20.', 40, 'Good progress! Please see me after class for help with the challenging problems.', 'graded'),
+    (2, 1, 'Shreyas Verma', 'Created detailed 3D model with comprehensive report covering all planets and recent Mars discoveries.', 95, 'Outstanding project! Excellent attention to detail and research quality.', 'graded')
+  `);
+
   // Insert demo academic performance data
   db.run(`
     INSERT OR IGNORE INTO academic_performance (student_id, study_streak, weekly_study_hours, monthly_study_hours, achievements, class_rank, total_students_in_class) VALUES 
@@ -323,10 +382,10 @@ db.serialize(() => {
   // Insert demo feedback
   db.run(`
     INSERT OR IGNORE INTO feedback (student_id, subject, message, rating, date) VALUES 
-    (1, 'Mathematics', 'Emma shows excellent problem-solving skills and is always eager to learn new concepts.', 5, '2024-01-20'),
+    (1, 'Mathematics', 'Shreyas shows excellent problem-solving skills and is always eager to learn new concepts.', 5, '2024-01-20'),
     (1, 'Science', 'Great participation in lab experiments. Keep up the good work!', 4, '2024-01-21'),
-    (2, 'Mathematics', 'Jake has improved significantly this term. Needs to work on homework consistency.', 3, '2024-01-20'),
-    (3, 'English', 'Lily has excellent writing skills and contributes well to class discussions.', 5, '2024-01-22')
+    (2, 'Mathematics', 'Akash has improved significantly this term. Needs to work on homework consistency.', 3, '2024-01-20'),
+    (3, 'English', 'Aniket has excellent writing skills and contributes well to class discussions.', 5, '2024-01-22')
   `);
 
   // Insert demo schedule events after table creation
@@ -336,10 +395,10 @@ db.serialize(() => {
       ('Mathematics', 'Monday', '09:00', '09:45', 'Room 101', NULL, 'General Mathematics class for all students'),
       ('Science', 'Monday', '10:00', '10:45', 'Lab 1', NULL, 'Physics - Motion and Force'),
       ('English', 'Monday', '11:00', '11:45', 'Room 102', NULL, 'Literature - Shakespeare'),
-      ('Mathematics', 'Tuesday', '09:00', '09:45', 'Room 101', 1, 'Special tutoring for Emma Smith'),
+      ('Mathematics', 'Tuesday', '09:00', '09:45', 'Room 101', 1, 'Special tutoring for Shreyas Verma'),
       ('Science', 'Tuesday', '10:00', '10:45', 'Lab 1', NULL, 'Chemistry - Elements for all students'),
       ('Physical Education', 'Wednesday', '14:00', '15:00', 'Gymnasium', NULL, 'Sports activities'),
-      ('Computer Science', 'Thursday', '11:00', '12:00', 'Computer Lab', 2, 'Programming basics for Jake Wilson'),
+      ('Computer Science', 'Thursday', '11:00', '12:00', 'Computer Lab', 2, 'Programming basics for Akash Gadade'),
       ('Art', 'Friday', '13:00', '14:00', 'Art Room', NULL, 'Creative arts session')
     `, (err) => {
       if (err) {
@@ -413,7 +472,577 @@ const getLetterGrade = (score) => {
   return 'F';
 };
 
-// Academic Performance Routes - NEW FUNCTIONALITY
+// ASSIGNMENTS API ROUTES
+
+// Get assignments (for teachers - all assignments they created, for parents - assignments for their children)
+app.get('/api/assignments', authenticateToken, (req, res) => {
+  console.log('GET /api/assignments - User role:', req.user.role, 'User ID:', req.user.id);
+  
+  if (req.user.role === 'parent') {
+    // For parents, get assignments for their children
+    db.all(
+      `SELECT a.*, 
+              CASE WHEN a.student_id IS NOT NULL THEN s.name ELSE 'Class Assignment' END as target_name,
+              COALESCE(sub.status, 'not_submitted') as submission_status,
+              sub.grade_received,
+              sub.submission_date,
+              sub.feedback as submission_feedback
+       FROM assignments a 
+       LEFT JOIN students s ON a.student_id = s.id 
+       LEFT JOIN assignment_submissions sub ON a.id = sub.assignment_id AND s.id = sub.student_id
+       WHERE (a.student_id IS NOT NULL AND s.parent_id = ?) 
+             OR (a.student_id IS NULL AND EXISTS (
+                SELECT 1 FROM students st WHERE st.parent_id = ? AND st.grade = a.class_grade
+             ))
+       ORDER BY a.due_date ASC, a.created_at DESC`,
+      [req.user.id, req.user.id],
+      (err, assignments) => {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: 'Database error' });
+        }
+        console.log('Parent assignments found:', assignments.length);
+        res.json(assignments);
+      }
+    );
+  } else if (req.user.role === 'teacher' || req.user.role === 'management') {
+    // For teachers/management, get all assignments (teachers see their own, management sees all)
+    let query = `
+      SELECT a.*, 
+             CASE WHEN a.student_id IS NOT NULL THEN s.name ELSE ('Class ' || a.class_grade) END as target_name,
+             COUNT(sub.id) as submission_count,
+             COUNT(CASE WHEN sub.status = 'graded' THEN 1 END) as graded_count
+      FROM assignments a 
+      LEFT JOIN students s ON a.student_id = s.id 
+      LEFT JOIN assignment_submissions sub ON a.id = sub.assignment_id
+    `;
+    
+    const params = [];
+    
+    if (req.user.role === 'teacher') {
+      query += ' WHERE a.teacher_id = ?';
+      params.push(req.user.id);
+    }
+    
+    query += `
+      GROUP BY a.id, a.teacher_id, a.teacher_name, a.title, a.description, a.subject, 
+               a.class_grade, a.student_id, a.due_date, a.total_marks, a.assignment_type, 
+               a.status, a.assigned_date, a.created_at, s.name
+      ORDER BY a.due_date ASC, a.created_at DESC
+    `;
+
+    db.all(query, params, (err, assignments) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      console.log('Teacher/Management assignments found:', assignments.length);
+      res.json(assignments);
+    });
+  } else {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+});
+
+// Get assignments for a specific student (for parent dashboard)
+app.get('/api/assignments/student/:studentId', authenticateToken, (req, res) => {
+  const { studentId } = req.params;
+  console.log('GET /api/assignments/student/:studentId - Student ID:', studentId, 'User role:', req.user.role);
+  
+  // Validate studentId
+  if (!studentId || isNaN(parseInt(studentId))) {
+    return res.status(400).json({ error: 'Invalid student ID provided' });
+  }
+
+  // Check access permissions
+  if (req.user.role === 'parent') {
+    // Parents can only access their own children's assignments
+    db.get(
+      'SELECT * FROM students WHERE id = ? AND parent_id = ?',
+      [studentId, req.user.id],
+      (err, student) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).json({ error: 'Database error' });
+        }
+        if (!student) {
+          return res.status(403).json({ error: 'Access denied' });
+        }
+        fetchStudentAssignments();
+      }
+    );
+  } else {
+    // Teachers and management can access all student assignments
+    fetchStudentAssignments();
+  }
+  
+  function fetchStudentAssignments() {
+    db.all(
+      `SELECT a.*, 
+              s.name as student_name,
+              s.grade as student_grade,
+              COALESCE(sub.status, 'not_submitted') as submission_status,
+              sub.grade_received,
+              sub.submission_date,
+              sub.feedback as submission_feedback,
+              sub.submission_text
+       FROM assignments a 
+       JOIN students s ON s.id = ?
+       LEFT JOIN assignment_submissions sub ON a.id = sub.assignment_id AND sub.student_id = ?
+       WHERE (a.student_id = ? OR (a.student_id IS NULL AND a.class_grade = s.grade))
+       ORDER BY a.due_date ASC, a.created_at DESC`,
+      [studentId, studentId, studentId],
+      (err, assignments) => {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: 'Database error' });
+        }
+        console.log('Student assignments found:', assignments.length);
+        res.json(assignments);
+      }
+    );
+  }
+});
+
+// Create new assignment (teachers only) - IMPROVED VERSION
+app.post('/api/assignments', authenticateToken, requireTeacherOrManagement, (req, res) => {
+  console.log('POST /api/assignments - User:', req.user.role, 'User ID:', req.user.id, 'Request body:', req.body);
+  
+  const { 
+    title, 
+    description, 
+    subject, 
+    class_grade, 
+    student_id, 
+    due_date, 
+    total_marks, 
+    assignment_type 
+  } = req.body;
+
+  // Validate required fields
+  if (!title || !description || !subject || !due_date) {
+    console.log('Validation failed: Missing required fields');
+    return res.status(400).json({ 
+      error: 'Missing required fields',
+      details: 'Title, description, subject, and due date are required'
+    });
+  }
+
+  // Validate title and description length
+  if (title.trim().length === 0) {
+    return res.status(400).json({ error: 'Title cannot be empty' });
+  }
+  
+  if (description.trim().length === 0) {
+    return res.status(400).json({ error: 'Description cannot be empty' });
+  }
+
+  // Validate that either class_grade or student_id is provided (but not both)
+  if (!class_grade && !student_id) {
+    console.log('Validation failed: Neither class_grade nor student_id provided');
+    return res.status(400).json({ 
+      error: 'Assignment target required',
+      details: 'Either a class or specific student must be selected'
+    });
+  }
+
+  if (class_grade && student_id) {
+    console.log('Validation failed: Both class_grade and student_id provided');
+    return res.status(400).json({ 
+      error: 'Invalid assignment target',
+      details: 'Please select either a class OR a specific student, not both'
+    });
+  }
+
+  // Validate due date format and ensure it's not in the past
+  const dueDateObj = new Date(due_date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Set to start of day for comparison
+  
+  if (isNaN(dueDateObj.getTime())) {
+    return res.status(400).json({ error: 'Invalid due date format' });
+  }
+  
+  if (dueDateObj < today) {
+    return res.status(400).json({ error: 'Due date cannot be in the past' });
+  }
+
+  // Validate total marks
+  if (total_marks && (isNaN(total_marks) || total_marks <= 0 || total_marks > 1000)) {
+    return res.status(400).json({ 
+      error: 'Invalid total marks',
+      details: 'Total marks must be a number between 1 and 1000'
+    });
+  }
+
+  // Validate assignment type
+  const validTypes = ['homework', 'project', 'test', 'quiz', 'lab'];
+  if (assignment_type && !validTypes.includes(assignment_type)) {
+    return res.status(400).json({ 
+      error: 'Invalid assignment type',
+      details: `Assignment type must be one of: ${validTypes.join(', ')}`
+    });
+  }
+
+  // Ensure user info is available from JWT
+  if (!req.user.id || !req.user.name) {
+    console.error('User information missing from JWT token');
+    return res.status(500).json({ 
+      error: 'Authentication error',
+      details: 'User information is missing. Please log in again.'
+    });
+  }
+
+  // If specific student is selected, validate student exists
+  if (student_id) {
+    const studentIdNum = parseInt(student_id);
+    if (isNaN(studentIdNum)) {
+      return res.status(400).json({ error: 'Invalid student ID format' });
+    }
+    
+    db.get('SELECT id, grade, name FROM students WHERE id = ?', [studentIdNum], (err, student) => {
+      if (err) {
+        console.error('Database error checking student:', err);
+        return res.status(500).json({ 
+          error: 'Database error',
+          details: 'Failed to validate student information'
+        });
+      }
+      if (!student) {
+        console.log('Student not found:', studentIdNum);
+        return res.status(400).json({ 
+          error: 'Invalid student',
+          details: 'The selected student does not exist'
+        });
+      }
+      
+      console.log('Creating assignment for student:', student.name, 'Grade:', student.grade);
+      // Create assignment for specific student (use student's grade for class_grade)
+      createAssignment(student.grade, studentIdNum);
+    });
+  } else {
+    // Validate class grade
+    const gradeNum = parseInt(class_grade);
+    if (isNaN(gradeNum) || gradeNum < 1 || gradeNum > 12) {
+      return res.status(400).json({ 
+        error: 'Invalid class grade',
+        details: 'Class grade must be between 1 and 12'
+      });
+    }
+    
+    console.log('Creating assignment for class:', class_grade);
+    // Create assignment for entire class
+    createAssignment(class_grade, null);
+  }
+
+  function createAssignment(gradeLevel, specificStudentId) {
+    const assignmentData = {
+      teacher_id: req.user.id,
+      teacher_name: req.user.name,
+      title: title.trim(),
+      description: description.trim(),
+      subject: subject.trim(),
+      class_grade: gradeLevel,
+      student_id: specificStudentId,
+      due_date: due_date,
+      total_marks: parseInt(total_marks) || 100,
+      assignment_type: assignment_type || 'homework'
+    };
+
+    console.log('Inserting assignment with data:', assignmentData);
+
+    db.run(
+      `INSERT INTO assignments (
+        teacher_id, teacher_name, title, description, subject, 
+        class_grade, student_id, due_date, total_marks, assignment_type
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        assignmentData.teacher_id,
+        assignmentData.teacher_name,
+        assignmentData.title,
+        assignmentData.description,
+        assignmentData.subject,
+        assignmentData.class_grade,
+        assignmentData.student_id,
+        assignmentData.due_date,
+        assignmentData.total_marks,
+        assignmentData.assignment_type
+      ],
+      function(err) {
+        if (err) {
+          console.error('Database insert error:', err);
+          return res.status(500).json({ 
+            error: 'Failed to create assignment',
+            details: 'Database error occurred while saving the assignment'
+          });
+        }
+        
+        const assignmentId = this.lastID;
+        console.log('Assignment created successfully with ID:', assignmentId);
+        
+        // Return the complete assignment object
+        const newAssignment = {
+          id: assignmentId,
+          teacher_id: assignmentData.teacher_id,
+          teacher_name: assignmentData.teacher_name,
+          title: assignmentData.title,
+          description: assignmentData.description,
+          subject: assignmentData.subject,
+          class_grade: assignmentData.class_grade,
+          student_id: assignmentData.student_id,
+          due_date: assignmentData.due_date,
+          total_marks: assignmentData.total_marks,
+          assignment_type: assignmentData.assignment_type,
+          status: 'assigned',
+          assigned_date: new Date().toISOString().split('T')[0],
+          target_name: specificStudentId ? 'Individual Student' : `Class ${gradeLevel}`,
+          submission_count: 0,
+          graded_count: 0
+        };
+        
+        res.status(201).json({ 
+          success: true,
+          message: 'Assignment created successfully',
+          assignment: newAssignment
+        });
+      }
+    );
+  }
+});
+
+// Update assignment (teachers only)
+app.put('/api/assignments/:id', authenticateToken, requireTeacherOrManagement, (req, res) => {
+  const { id } = req.params;
+  const { title, description, subject, class_grade, student_id, due_date, total_marks, assignment_type, status } = req.body;
+  
+  console.log('PUT /api/assignments/:id - ID:', id, 'Request body:', req.body);
+
+  // Validate required fields
+  if (!title || !description || !subject || !due_date) {
+    return res.status(400).json({ error: 'Title, description, subject, and due date are required' });
+  }
+
+  // Check if assignment exists and user has permission to edit
+  db.get('SELECT * FROM assignments WHERE id = ?', [id], (err, assignment) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    if (!assignment) {
+      return res.status(404).json({ error: 'Assignment not found' });
+    }
+
+    // Teachers can only edit their own assignments, management can edit all
+    if (req.user.role === 'teacher' && assignment.teacher_id !== req.user.id) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    db.run(
+      `UPDATE assignments 
+       SET title = ?, description = ?, subject = ?, class_grade = ?, student_id = ?, 
+           due_date = ?, total_marks = ?, assignment_type = ?, status = ?
+       WHERE id = ?`,
+      [
+        title.trim(), 
+        description.trim(), 
+        subject.trim(), 
+        class_grade, 
+        student_id, 
+        due_date, 
+        total_marks || 100, 
+        assignment_type || 'homework',
+        status || assignment.status,
+        id
+      ],
+      function(err) {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: 'Failed to update assignment' });
+        }
+
+        console.log('Assignment updated, ID:', id);
+        res.json({ message: 'Assignment updated successfully' });
+      }
+    );
+  });
+});
+
+// Delete assignment (teachers only)
+app.delete('/api/assignments/:id', authenticateToken, requireTeacherOrManagement, (req, res) => {
+  const { id } = req.params;
+  console.log('DELETE /api/assignments/:id - ID:', id);
+
+  // Check if assignment exists and user has permission to delete
+  db.get('SELECT * FROM assignments WHERE id = ?', [id], (err, assignment) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    if (!assignment) {
+      return res.status(404).json({ error: 'Assignment not found' });
+    }
+
+    // Teachers can only delete their own assignments, management can delete all
+    if (req.user.role === 'teacher' && assignment.teacher_id !== req.user.id) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    // Delete assignment and related submissions
+    db.serialize(() => {
+      db.run('DELETE FROM assignment_submissions WHERE assignment_id = ?', [id]);
+      db.run('DELETE FROM assignments WHERE id = ?', [id], function(err) {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: 'Failed to delete assignment' });
+        }
+
+        console.log('Assignment deleted, ID:', id);
+        res.json({ message: 'Assignment deleted successfully' });
+      });
+    });
+  });
+});
+
+// Submit assignment (students/parents)
+app.post('/api/assignments/:id/submit', authenticateToken, (req, res) => {
+  const { id: assignmentId } = req.params;
+  const { student_id, submission_text } = req.body;
+  
+  console.log('POST /api/assignments/:id/submit - Assignment ID:', assignmentId, 'Student ID:', student_id);
+
+  if (!student_id || !submission_text) {
+    return res.status(400).json({ error: 'Student ID and submission text are required' });
+  }
+
+  // For parents, verify they can submit for this student
+  if (req.user.role === 'parent') {
+    db.get('SELECT * FROM students WHERE id = ? AND parent_id = ?', [student_id, req.user.id], (err, student) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      if (!student) {
+        return res.status(403).json({ error: 'Access denied' });
+      }
+      submitAssignment(student);
+    });
+  } else {
+    // For teachers/management, get student info
+    db.get('SELECT * FROM students WHERE id = ?', [student_id], (err, student) => {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      if (!student) {
+        return res.status(400).json({ error: 'Student not found' });
+      }
+      submitAssignment(student);
+    });
+  }
+
+  function submitAssignment(student) {
+    // Check if assignment exists and student is eligible
+    db.get(
+      `SELECT a.* FROM assignments a 
+       WHERE a.id = ? AND (a.student_id = ? OR (a.student_id IS NULL AND a.class_grade = ?))`,
+      [assignmentId, student_id, student.grade],
+      (err, assignment) => {
+        if (err) {
+          console.error('Database error:', err);
+          return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (!assignment) {
+          return res.status(404).json({ error: 'Assignment not found or not assigned to this student' });
+        }
+
+        // Check if already submitted
+        db.get(
+          'SELECT id FROM assignment_submissions WHERE assignment_id = ? AND student_id = ?',
+          [assignmentId, student_id],
+          (err, existingSubmission) => {
+            if (err) {
+              console.error('Database error:', err);
+              return res.status(500).json({ error: 'Database error' });
+            }
+
+            if (existingSubmission) {
+              return res.status(400).json({ error: 'Assignment already submitted' });
+            }
+
+            // Determine if submission is late
+            const currentDate = new Date().toISOString().split('T')[0];
+            const isLate = currentDate > assignment.due_date;
+            const submissionStatus = isLate ? 'late' : 'submitted';
+
+            // Insert submission
+            db.run(
+              `INSERT INTO assignment_submissions (
+                assignment_id, student_id, student_name, submission_text, status
+              ) VALUES (?, ?, ?, ?, ?)`,
+              [assignmentId, student_id, student.name, submission_text.trim(), submissionStatus],
+              function(err) {
+                if (err) {
+                  console.error('Database error:', err);
+                  return res.status(500).json({ error: 'Failed to submit assignment' });
+                }
+
+                console.log('Assignment submitted with ID:', this.lastID);
+                res.json({ 
+                  id: this.lastID, 
+                  message: 'Assignment submitted successfully',
+                  status: submissionStatus
+                });
+              }
+            );
+          }
+        );
+      }
+    );
+  }
+});
+
+// Grade assignment (teachers only)
+app.post('/api/assignments/:id/grade', authenticateToken, requireTeacherOrManagement, (req, res) => {
+  const { id: assignmentId } = req.params;
+  const { student_id, grade_received, feedback } = req.body;
+  
+  console.log('POST /api/assignments/:id/grade - Assignment ID:', assignmentId, 'Student ID:', student_id);
+
+  if (!student_id || grade_received === undefined) {
+    return res.status(400).json({ error: 'Student ID and grade are required' });
+  }
+
+  // Validate grade
+  if (grade_received < 0 || grade_received > 100) {
+    return res.status(400).json({ error: 'Grade must be between 0 and 100' });
+  }
+
+  // Update submission with grade
+  db.run(
+    `UPDATE assignment_submissions 
+     SET grade_received = ?, feedback = ?, status = 'graded' 
+     WHERE assignment_id = ? AND student_id = ?`,
+    [grade_received, feedback || '', assignmentId, student_id],
+    function(err) {
+      if (err) {
+        console.error('Database error:', err);
+        return res.status(500).json({ error: 'Failed to grade assignment' });
+      }
+
+      if (this.changes === 0) {
+        return res.status(404).json({ error: 'Submission not found' });
+      }
+
+      console.log('Assignment graded successfully');
+      res.json({ message: 'Assignment graded successfully' });
+    }
+  );
+});
+
+// Academic Performance Routes - EXISTING FUNCTIONALITY
 // Get academic performance data for a student
 app.get('/api/performance/:studentId', authenticateToken, (req, res) => {
   const { studentId } = req.params;
@@ -657,7 +1286,7 @@ app.post('/api/auth/login', async (req, res) => {
         }
 
         const token = jwt.sign(
-          { id: user.id, email: user.email, role: user.role },
+          { id: user.id, email: user.email, role: user.role, name: user.name },
           JWT_SECRET,
           { expiresIn: '24h' }
         );
@@ -743,7 +1372,7 @@ app.post('/api/auth/verify-otp', async (req, res) => {
         }
 
         const token = jwt.sign(
-          { id: user.id, email: user.email, role: user.role },
+          { id: user.id, email: user.email, role: user.role, name: user.name },
           JWT_SECRET,
           { expiresIn: '24h' }
         );
