@@ -105,12 +105,52 @@ export const feesAPI = {
   addPayment: (data: any) => api.post('/fees/payment', data),
 };
 
-// NEW: Academic Performance API
+// Academic Performance API
 export const performanceAPI = {
   getByStudent: (studentId: number) => api.get(`/performance/${studentId}`),
   create: (data: any) => api.post('/performance', data),
   update: (studentId: number, data: any) => api.put(`/performance/${studentId}`, data),
   delete: (studentId: number) => api.delete(`/performance/${studentId}`),
+};
+
+// NEW: Assignments API
+export const assignmentsAPI = {
+  // Get all assignments (teachers see their own, parents see assignments for their children)
+  getAll: () => api.get('/assignments'),
+  
+  // Get assignments for a specific student (for parent dashboard)
+  getByStudent: (studentId: number) => api.get(`/assignments/student/${studentId}`),
+  
+  // Create new assignment (teachers only)
+  create: (data: {
+    title: string;
+    description: string;
+    subject: string;
+    class_grade?: string;
+    student_id?: number;
+    due_date: string;
+    total_marks?: number;
+    assignment_type?: string;
+  }) => api.post('/assignments', data),
+  
+  // Update assignment (teachers only)
+  update: (id: number, data: any) => api.put(`/assignments/${id}`, data),
+  
+  // Delete assignment (teachers only)
+  delete: (id: number) => api.delete(`/assignments/${id}`),
+  
+  // Submit assignment (students/parents)
+  submit: (assignmentId: number, data: {
+    student_id: number;
+    submission_text: string;
+  }) => api.post(`/assignments/${assignmentId}/submit`, data),
+  
+  // Grade assignment (teachers only)
+  grade: (assignmentId: number, data: {
+    student_id: number;
+    grade_received: number;
+    feedback?: string;
+  }) => api.post(`/assignments/${assignmentId}/grade`, data),
 };
 
 // Management API functions with proper error handling and logging
