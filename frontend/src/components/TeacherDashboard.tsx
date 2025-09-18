@@ -640,31 +640,7 @@ const TeacherIDCard: React.FC<{ teacher: any; stats?: DashboardStats | null }> =
               </div>
 
               <div className="flex-1 space-y-6">
-                {/* Department Information */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
-                  <h4 className="font-semibold text-amber-400 mb-3 flex items-center">
-                    <BookOpen className="w-5 h-5 mr-2 text-amber-400" />
-                    Department Information
-                  </h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-slate-300">Department:</span>
-                      <span className="text-white font-medium">Computer Science</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-300">Position:</span>
-                      <span className="text-white font-medium">Senior Professor</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-300">Experience:</span>
-                      <span className="text-white font-medium">8+ Years</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-300">Specialization:</span>
-                      <span className="text-white font-medium">AI & Machine Learning</span>
-                    </div>
-                  </div>
-                </div>
+
 
                 {/* Performance Metrics */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
@@ -687,28 +663,6 @@ const TeacherIDCard: React.FC<{ teacher: any; stats?: DashboardStats | null }> =
                     </div>
                   </div>
                 </div>
-
-                {/* Certifications */}
-                <div className="bg-white/5 backdrop-blur-sm rounded-xl p-5 border border-white/10">
-                  <h4 className="font-semibold text-amber-400 mb-3 flex items-center">
-                    <Award className="w-5 h-5 mr-2 text-amber-400" />
-                    Certifications
-                  </h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-3 h-3 text-green-400" />
-                      <span className="text-white">Ph.D. Computer Science</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-3 h-3 text-green-400" />
-                      <span className="text-white">Certified ML Professional</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <CheckCircle className="w-3 h-3 text-green-400" />
-                      <span className="text-white">Teaching Excellence Award</span>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* Footer */}
@@ -716,7 +670,7 @@ const TeacherIDCard: React.FC<{ teacher: any; stats?: DashboardStats | null }> =
                 <div className="inline-flex items-center space-x-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
                   <Shield className="w-4 h-4 text-amber-400" />
                   <span className="text-xs text-slate-300">
-                    Authorized by <span className="text-amber-400 font-semibold">Elite University</span>
+                    Powered by <span className="text-amber-400 font-semibold"> MyUniOne</span>
                   </span>
                 </div>
               </div>
@@ -1352,7 +1306,7 @@ const TeacherDashboard: React.FC = () => {
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
             </div>
-            <span className="logo-text text-xl font-bold text-gray-900">MY UNIONE</span>
+            <span className="logo-text text-xl font-bold text-gray-900">MyUniOne</span>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4">
             <span className="text-xs sm:text-sm text-gray-600 hidden sm:block">Welcome, {user?.name}</span>
@@ -1382,7 +1336,7 @@ const TeacherDashboard: React.FC = () => {
                     <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">My UniOne</h3>
+                <h3 className="text-lg font-semibold text-gray-900">MyUniOne</h3>
               </div>
               <p className="text-gray-600 text-sm sm:text-base">Connecting parents, students, and teachers for better educational outcomes through innovative digital solutions.</p>
             </div>
@@ -1408,7 +1362,7 @@ const TeacherDashboard: React.FC = () => {
         </div>
         <div className="footer-bottom border-t border-gray-200 py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-gray-600 text-sm">&copy; 2025 My UniOne Ltd. All rights reserved.</p>
+            <p className="text-center text-gray-600 text-sm">&copy; 2025 MyUniOne Ltd. All rights reserved.</p>
           </div>
         </div>
       </footer>
