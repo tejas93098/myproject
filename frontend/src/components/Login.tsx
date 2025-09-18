@@ -239,7 +239,7 @@ const Login: React.FC = () => {
                   <GraduationCap className="w-8 h-8" />
                 </div>
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  My UniOne
+                  MyUniOne
                 </span>
               </div>
               <button
@@ -264,7 +264,7 @@ const Login: React.FC = () => {
                   <GraduationCap className="w-8 h-8 text-white" />
                 </div>
                 <h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
-                <p className="text-blue-100">Sign in to your My UniOne account</p>
+                <p className="text-blue-100">Sign in to your MyUniOne account</p>
               </div>
 
               <div className="p-6 space-y-6">
@@ -456,7 +456,7 @@ const Login: React.FC = () => {
 
                 {/* Footer */}
                 <div className="text-center text-sm text-gray-600 pt-4 border-t border-gray-200">
-                  <p>Secure login powered by My UniOne</p>
+                  <p>Secure login powered by MyUniOne</p>
                 </div>
               </div>
             </div>
@@ -479,7 +479,7 @@ const Login: React.FC = () => {
                 <GraduationCap className="w-6 h-6 text-white" />
               </div>
               <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                My UniOne
+                MyUniOne
               </span>
             </div>
             
@@ -636,7 +636,7 @@ const Login: React.FC = () => {
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.about ? 'animate-fadeInUp' : 'opacity-0 translate-y-10'}`}>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              About <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">My UniOne</span>
+              About <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">MyUniOne</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               We're revolutionizing education management with innovative digital solutions that create seamless connections between all stakeholders.
@@ -702,7 +702,7 @@ const Login: React.FC = () => {
 
           {/* Key Highlights */}
           <div className={`transition-all duration-1000 ${isVisible.about ? 'animate-fadeInUp animation-delay-500' : 'opacity-0 translate-y-10'}`}>
-            <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Why Schools Choose My UniOne</h3>
+            <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">Why Schools Choose MyUniOne</h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 {
@@ -1046,7 +1046,7 @@ const Login: React.FC = () => {
                   
                   <h3 className="text-2xl font-bold mb-4">Ready to Get Started?</h3>
                   <p className="text-blue-100 mb-8 leading-relaxed">
-                    Join thousands of schools already using My UniOne to transform their educational experience.
+                    Join thousands of schools already using MyUniOne to transform their educational experience.
                   </p>
 
                   <div className="space-y-4">
@@ -1093,7 +1093,7 @@ const Login: React.FC = () => {
                 <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mr-3">
                   <GraduationCap className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-xl font-bold">My UniOne</span>
+                <span className="text-xl font-bold">MyUniOne</span>
               </div>
               <p className="text-gray-400 leading-relaxed">
                 Empowering education through innovative digital solutions that connect schools, teachers, parents, and students.
@@ -1132,7 +1132,7 @@ const Login: React.FC = () => {
           <div className="border-t border-gray-800 pt-8 mt-8">
             <div className="flex flex-col sm:flex-row justify-between items-center">
               <p className="text-gray-400 text-sm">
-                &copy; 2025 My UniOne Ltd. All rights reserved.
+                &copy; 2025 MyUniOne Ltd. All rights reserved.
               </p>
               <div className="flex items-center gap-4 mt-4 sm:mt-0">
                 <span className="text-gray-400 text-sm">Powered by MyUniOne</span>
