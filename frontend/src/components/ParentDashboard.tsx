@@ -213,7 +213,7 @@ const StudentIDCard: React.FC<{
                   <GraduationCap className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-lg sm:text-xl tracking-wide">MY UNIONE</h3>
+                  <h3 className="text-white font-bold text-lg sm:text-xl tracking-wide">MyUniOne</h3>
                   <p className="text-blue-200 text-sm font-medium">UNIVERSITY</p>
                 </div>
               </div>
@@ -352,27 +352,6 @@ const StudentIDCard: React.FC<{
                       </div>
                     )}
 
-                    {/* Study Progress */}
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="bg-black/30 backdrop-blur-xl rounded-xl p-4 border border-white/10 shadow-lg">
-                        <div className="flex items-center mb-2">
-                          <Flame className="w-4 h-4 text-orange-400 mr-2" />
-                          <h5 className="text-white text-sm font-semibold">STREAK</h5>
-                        </div>
-                        <div className="text-2xl font-bold text-orange-400">{performance.study_streak}</div>
-                        <div className="text-xs text-blue-200">days</div>
-                      </div>
-                      
-                      <div className="bg-black/30 backdrop-blur-xl rounded-xl p-4 border border-white/10 shadow-lg">
-                        <div className="flex items-center mb-2">
-                          <Timer className="w-4 h-4 text-green-400 mr-2" />
-                          <h5 className="text-white text-sm font-semibold">WEEKLY</h5>
-                        </div>
-                        <div className="text-2xl font-bold text-green-400">{performance.weekly_study_hours}</div>
-                        <div className="text-xs text-blue-200">hours</div>
-                      </div>
-                    </div>
-
                     {/* Latest Achievement */}
                     {performance.achievements && performance.achievements.length > 0 && (
                       <div className="bg-black/30 backdrop-blur-xl rounded-xl p-4 border border-white/10 shadow-lg">
@@ -396,11 +375,14 @@ const StudentIDCard: React.FC<{
               </div>
 
               {/* Footer Branding */}
-              <div className="mt-6 text-center border-t border-white/10 pt-4">
-                <p className="text-xs text-blue-200 font-medium tracking-wide">
-                  POWERED BY <span className="text-white font-bold">MY UNIONE</span>
-                </p>
-              </div>
+              <div className="mt-6 text-center">
+                 <div className="inline-flex items-center space-x-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+                   <Shield className="w-4 h-4 text-amber-400" />
+                   <span className="text-xs text-slate-300">
+                     Powered by <span className="text-amber-400 font-semibold"> MyUniOne</span>
+                   </span>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
@@ -903,7 +885,7 @@ const ParentDashboard: React.FC = () => {
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
             </div>
-            <span className="logo-text text-xl font-bold text-gray-900">MY UNIONE</span>
+            <span className="logo-text text-xl font-bold text-gray-900">MyUniOne</span>
           </div>
           <div className="flex items-center space-x-2 sm:space-x-4">
             <span className="text-xs sm:text-sm text-gray-600 hidden sm:block">Welcome, {user?.name}</span>
@@ -933,7 +915,7 @@ const ParentDashboard: React.FC = () => {
                     <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900">My UniOne</h3>
+                <h3 className="text-lg font-semibold text-gray-900">MyUniOne</h3>
               </div>
               <p className="text-gray-600 text-sm sm:text-base">Connecting parents, students, and teachers for better educational outcomes through innovative digital solutions.</p>
             </div>
@@ -959,7 +941,7 @@ const ParentDashboard: React.FC = () => {
         </div>
         <div className="footer-bottom border-t border-gray-200 py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-center text-gray-600 text-sm">&copy; 2025 My UniOne Ltd. All rights reserved.</p>
+            <p className="text-center text-gray-600 text-sm">&copy; 2025 MyUniOne Ltd. All rights reserved.</p>
           </div>
         </div>
       </footer>
