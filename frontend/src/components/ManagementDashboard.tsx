@@ -139,17 +139,6 @@ interface AttendanceRecord {
   status: 'present' | 'absent' | 'late';
 }
 
-interface Announcement {
-  id: number;
-  title: string;
-  content: string;
-  priority: 'low' | 'medium' | 'high' | 'urgent';
-  category: string;
-  date: string;
-  author: string;
-  target_audience: string[];
-  is_published: boolean;
-}
 
 interface PerformanceData {
   id: number;
@@ -268,7 +257,7 @@ const ManagementIDCard: React.FC<{ manager: any; stats?: DashboardStats | null }
                   <Building className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-amber-400 font-bold text-lg sm:text-xl tracking-wide">MY UNIONE</h3>
+                  <h3 className="text-amber-400 font-bold text-lg sm:text-xl tracking-wide">MyUniOne</h3>
                   <p className="text-yellow-200 text-sm font-medium">EXECUTIVE</p>
                 </div>
               </div>
@@ -402,46 +391,17 @@ const ManagementIDCard: React.FC<{ manager: any; stats?: DashboardStats | null }
                     </div>
                   </div>
                 </div>
-
-                {/* Financial Overview */}
-                <div className="bg-black/40 backdrop-blur-xl rounded-xl p-5 border border-white/10 shadow-lg">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="font-semibold text-amber-400 flex items-center">
-                      <Receipt className="w-5 h-5 mr-2 text-amber-400" />
-                      FINANCIAL OVERVIEW
-                    </h4>
-                  </div>
-                  <div className="text-sm">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-yellow-200">Collected:</span>
-                      <span className="text-emerald-400 font-medium">${stats?.fees_collected || 0}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-yellow-200">Pending:</span>
-                      <span className="text-orange-400 font-medium">${stats?.fees_pending || 0}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Administrative Status */}
-                <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 border border-white/10 shadow-lg">
-                  <h4 className="font-semibold text-amber-400 mb-3 flex items-center">
-                    <Activity className="w-5 h-5 mr-2 text-amber-400" />
-                    SYSTEM STATUS
-                  </h4>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-yellow-200">Attendance Rate:</span>
-                    <span className="text-emerald-400 font-medium">{stats?.attendance_rate || 0}%</span>
-                  </div>
-                </div>
               </div>
 
               {/* Executive Footer Branding */}
-              <div className="mt-6 text-center border-t border-white/10 pt-4">
-                <p className="text-xs text-yellow-200 font-medium tracking-widest">
-                  EXECUTIVE ACCESS • <span className="text-amber-400 font-bold">MY UNIONE</span>
-                </p>
-              </div>
+             <div className="mt-6 text-center">
+                             <div className="inline-flex items-center space-x-2 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+                               <Shield className="w-4 h-4 text-amber-400" />
+                               <span className="text-xs text-slate-300">
+                                 Powered by <span className="text-amber-400 font-semibold"> MyUniOne</span>
+                               </span>
+                             </div>
+                           </div>
             </div>
           </div>
         </div>
@@ -1004,7 +964,6 @@ const ManagementDashboard: React.FC = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [fees, setFees] = useState<FeeRecord[]>([]);
   const [attendance, setAttendance] = useState<AttendanceRecord[]>([]);
-  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [performance, setPerformance] = useState<PerformanceData[]>([]);
   const [library, setLibrary] = useState<LibraryRecord[]>([]);
   const [transport, setTransport] = useState<TransportRoute[]>([]);
@@ -1013,7 +972,7 @@ const ManagementDashboard: React.FC = () => {
   const [showAddStudent, setShowAddStudent] = useState(false);
   const [showAddTeacher, setShowAddTeacher] = useState(false);
   const [showAddFee, setShowAddFee] = useState(false);
-  const [showAddAnnouncement, setShowAddAnnouncement] = useState(false);
+
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState('');
@@ -1045,13 +1004,7 @@ const ManagementDashboard: React.FC = () => {
     due_date: '',
   });
 
-  const [announcementForm, setAnnouncementForm] = useState({
-    title: '',
-    content: '',
-    priority: 'medium' as 'low' | 'medium' | 'high' | 'urgent',
-    category: '',
-    target_audience: [] as string[],
-  });
+
 
   // Load all data on component mount
   useEffect(() => {
@@ -1072,7 +1025,6 @@ const ManagementDashboard: React.FC = () => {
         fetchTeachers(),
         fetchFees(),
         fetchAttendance(),
-        fetchAnnouncements(),
         fetchPerformance(),
         fetchLibrary(),
         fetchTransport(),
@@ -1137,15 +1089,7 @@ const ManagementDashboard: React.FC = () => {
     }
   };
 
-  const fetchAnnouncements = async () => {
-    try {
-      const response = await managementAPI.getAnnouncements();
-      setAnnouncements(response.data || []);
-    } catch (error: any) {
-      console.error('Error fetching announcements:', error);
-      setAnnouncements([]);
-    }
-  };
+
 
   const fetchPerformance = async () => {
     try {
@@ -1231,19 +1175,7 @@ const ManagementDashboard: React.FC = () => {
     }
   };
 
-  const handleAddAnnouncement = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await managementAPI.createAnnouncement(announcementForm);
-      toast.success('Announcement created successfully');
-      setShowAddAnnouncement(false);
-      setAnnouncementForm({ title: '', content: '', priority: 'medium', category: '', target_audience: [] });
-      fetchAnnouncements();
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.error || 'Failed to create announcement';
-      toast.error(errorMessage);
-    }
-  };
+
 
   // Delete functions
   const handleDeleteStudent = async (studentId: number) => {
@@ -1288,18 +1220,7 @@ const ManagementDashboard: React.FC = () => {
     }
   };
 
-  const handleDeleteAnnouncement = async (announcementId: number) => {
-    if (window.confirm('Are you sure you want to delete this announcement?')) {
-      try {
-        await managementAPI.deleteAnnouncement(announcementId);
-        toast.success('Announcement deleted successfully');
-        fetchAnnouncements();
-      } catch (error: any) {
-        const errorMessage = error.response?.data?.error || 'Failed to delete announcement';
-        toast.error(errorMessage);
-      }
-    }
-  };
+
 
   // Function to handle back navigation
   const handleBackToDashboard = () => {
@@ -1314,7 +1235,6 @@ const ManagementDashboard: React.FC = () => {
       'attendance': 'Attendance Management',
       'fees': 'Fees Management',
       'performance': 'Performance & Exams',
-      'announcements': 'Announcements',
       'library': 'Library Management',
       'transport': 'Transport Management',
       'reports': 'Reports & Analytics',
@@ -1358,7 +1278,7 @@ const ManagementDashboard: React.FC = () => {
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900">MY UNIONE</span>
+            <span className="text-xl font-bold text-gray-900">MyUniOne</span>
             <span className="ml-3 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">ADMIN</span>
           </div>
           <div className="flex items-center space-x-4">
@@ -1389,7 +1309,7 @@ const ManagementDashboard: React.FC = () => {
                   <path d="M6 12v5c3 3 9 3 12 0v-5"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900">My UniOne</h3>
+              <h3 className="text-lg font-semibold text-gray-900">MyUniOne</h3>
             </div>
             <p className="text-gray-600 text-sm sm:text-base">Connecting parents, students, and teachers for better educational outcomes through innovative digital solutions.</p>
           </div>
@@ -1415,7 +1335,7 @@ const ManagementDashboard: React.FC = () => {
       </div>
       <div className="footer-bottom border-t border-gray-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-gray-600 text-sm">&copy; 2025 My UniOne Ltd. All rights reserved.</p>
+          <p className="text-center text-gray-600 text-sm">&copy; 2025 MyUniOne Ltd. All rights reserved.</p>
         </div>
       </div>
     </footer>
@@ -1627,14 +1547,6 @@ const ManagementDashboard: React.FC = () => {
                   delay={400}
                 />
 
-                <FeatureBox
-                  title="Announcements"
-                  icon={Megaphone}
-                  onClick={() => setActiveTab('announcements')}
-                  gradient="from-pink-500 to-rose-600"
-                  description="School communications"
-                  delay={500}
-                />
 
                 {/* NEW: Performance Manager Feature */}
                 <FeatureBox
@@ -2314,148 +2226,6 @@ const ManagementDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Announcements Management Tab */}
-        {activeTab === 'announcements' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">Announcements Management</h2>
-              <button
-                onClick={() => setShowAddAnnouncement(true)}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                Create Announcement
-              </button>
-            </div>
-
-            {/* Add Announcement Form */}
-            {showAddAnnouncement && (
-              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-                <h3 className="text-lg font-semibold mb-4">Create New Announcement</h3>
-                <form onSubmit={handleAddAnnouncement} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
-                      <input
-                        type="text"
-                        value={announcementForm.title}
-                        onChange={(e) => setAnnouncementForm({...announcementForm, title: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                      <select
-                        value={announcementForm.category}
-                        onChange={(e) => setAnnouncementForm({...announcementForm, category: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        required
-                      >
-                        <option value="">Select Category</option>
-                        <option value="Academic">Academic</option>
-                        <option value="Events">Events</option>
-                        <option value="Transportation">Transportation</option>
-                        <option value="General">General</option>
-                        <option value="Emergency">Emergency</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
-                    <select
-                      value={announcementForm.priority}
-                      onChange={(e) => setAnnouncementForm({...announcementForm, priority: e.target.value as 'low' | 'medium' | 'high' | 'urgent'})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="high">High</option>
-                      <option value="urgent">Urgent</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
-                    <textarea
-                      rows={4}
-                      value={announcementForm.content}
-                      onChange={(e) => setAnnouncementForm({...announcementForm, content: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-                  <div className="flex gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setShowAddAnnouncement(false)}
-                      className="px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                    >
-                      Create Announcement
-                    </button>
-                  </div>
-                </form>
-              </div>
-            )}
-
-            {/* Announcements List */}
-            <div className="space-y-4">
-              {announcements.map((announcement) => (
-                <div key={announcement.id} className="bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-lg font-semibold text-gray-900">{announcement.title}</h3>
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          announcement.priority === 'urgent' ? 'bg-red-100 text-red-800' :
-                          announcement.priority === 'high' ? 'bg-orange-100 text-orange-800' :
-                          announcement.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {announcement.priority}
-                        </span>
-                        <span className="inline-flex px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                          {announcement.category}
-                        </span>
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          announcement.is_published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {announcement.is_published ? 'Published' : 'Draft'}
-                        </span>
-                      </div>
-                      <p className="text-gray-600 mb-3">{announcement.content}</p>
-                      <div className="text-sm text-gray-500">
-                        By {announcement.author} • {announcement.date}
-                      </div>
-                    </div>
-                    <div className="flex space-x-2 ml-4">
-                      <button className="text-blue-600 hover:text-blue-900">
-                        <Edit className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDeleteAnnouncement(announcement.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {announcements.length === 0 && (
-                <div className="text-center py-8">
-                  <Megaphone className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">No announcements found</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
 
         {/* Performance Management Tab - NEW ANALYTICS DASHBOARD */}
         {activeTab === 'performance' && (
@@ -2467,187 +2237,7 @@ const ManagementDashboard: React.FC = () => {
           />
         )}
 
-        {/* Library Management Tab */}
-        {activeTab === 'library' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">Library Management</h2>
-              <button
-                onClick={() => exportToCSV(library, 'library_report')}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-              >
-                <Download className="w-4 h-4" />
-                Export CSV
-              </button>
-            </div>
-
-            {/* Library Summary Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-                <div className="flex items-center">
-                  <div className="p-3 bg-blue-100 rounded-lg">
-                    <BookMarked className="w-6 h-6 text-blue-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Total Books</p>
-                    <p className="text-2xl font-bold text-gray-900">{library.length}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-                <div className="flex items-center">
-                  <div className="p-3 bg-yellow-100 rounded-lg">
-                    <Clock className="w-6 h-6 text-yellow-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Books Issued</p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {library.filter(record => record.status === 'issued').length}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-                <div className="flex items-center">
-                  <div className="p-3 bg-red-100 rounded-lg">
-                    <AlertCircle className="w-6 h-6 text-red-600" />
-                  </div>
-                  <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Overdue</p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {library.filter(record => record.status === 'overdue').length}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Library Table */}
-            <div className="bg-white/70 backdrop-blur-sm rounded-lg shadow border border-gray-200 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-gray-50/70">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Issue Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Return Date</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white/70 backdrop-blur-sm divide-y divide-gray-200">
-                    {library.map((record) => (
-                      <tr key={record.id} className="hover:bg-gray-50/50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{record.book_title}</div>
-                          <div className="text-sm text-gray-500">{record.book_isbn}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{record.student_name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{record.issue_date}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {record.return_date || 'Not returned'}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                            record.status === 'issued' ? 'bg-blue-100 text-blue-800' :
-                            record.status === 'returned' ? 'bg-green-100 text-green-800' :
-                            'bg-red-100 text-red-800'
-                          }`}>
-                            {record.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <div className="flex space-x-2">
-                            {record.status === 'issued' && (
-                              <button className="text-green-600 hover:text-green-900">
-                                <CheckCircle className="w-4 h-4" />
-                              </button>
-                            )}
-                            <button className="text-blue-600 hover:text-blue-900">
-                              <Edit className="w-4 h-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              {library.length === 0 && (
-                <div className="text-center py-8">
-                  <BookMarked className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">No library records found</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Transport Management Tab */}
-        {activeTab === 'transport' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-900">Transport Management</h2>
-              <button
-                onClick={() => exportToCSV(transport, 'transport_report')}
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"
-              >
-                <Download className="w-4 h-4" />
-                Export CSV
-              </button>
-            </div>
-
-            {/* Transport Routes Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {transport.map((route) => (
-                <div key={route.id} className="bg-white/70 backdrop-blur-sm rounded-lg p-6 border border-gray-200">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 bg-yellow-100 rounded-lg">
-                      <Bus className="w-6 h-6 text-yellow-600" />
-                    </div>
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      route.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {route.status}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{route.route_name}</h3>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex justify-between">
-                      <span>Driver:</span>
-                      <span className="font-medium">{route.driver_name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Bus Number:</span>
-                      <span className="font-medium">{route.bus_number}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Students:</span>
-                      <span className="font-medium">{route.students_count}</span>
-                    </div>
-                  </div>
-                  <div className="mt-4 flex space-x-2">
-                    <button className="flex-1 bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
-                      View Details
-                    </button>
-                    <button className="text-gray-400 hover:text-gray-600">
-                      <Edit className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
-              {transport.length === 0 && (
-                <div className="col-span-full text-center py-8">
-                  <Bus className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">No transport routes found</p>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+ 
       </main>
 
       <Footer />
