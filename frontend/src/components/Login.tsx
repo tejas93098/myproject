@@ -219,245 +219,395 @@ const Login: React.FC = () => {
     return <School onBack={() => setShowSchools(false)} />;
   }
 
-  // Login Modal/Page
+  // Login Page/Modal with Two-Column Layout
   if (showLogin) {
     return (
-      <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
-        {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-400/10 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-50 flex">
+        {/* Background Decorations */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-400/10 to-pink-400/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/3 w-60 h-60 bg-gradient-to-br from-cyan-400/5 to-blue-400/5 rounded-full blur-2xl"></div>
         </div>
-        
-        {/* Header */}
-        <header className="relative z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-200">
-          <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center cursor-pointer group" onClick={() => setShowLogin(false)}>
-                <div className="w-8 h-8 text-blue-600 mr-3 group-hover:rotate-12 transition-transform duration-300">
-                  <GraduationCap className="w-8 h-8" />
-                </div>
-                <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  MyUniOne
-                </span>
+
+        {/* Mobile Header */}
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+          <div className="flex items-center justify-between px-4 h-16">
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center mr-3">
+                <GraduationCap className="w-5 h-5 text-white" />
               </div>
-              <button
-                onClick={() => setShowLogin(false)}
-                className="text-gray-600 hover:text-blue-600 flex items-center gap-2 font-medium group transition-all duration-300"
-              >
-                <ArrowUp className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
-                Back to Home
-              </button>
+              <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                MyUniOne
+              </span>
             </div>
-          </nav>
-        </header>
+            <button
+              onClick={() => setShowLogin(false)}
+              className="text-gray-600 hover:text-blue-600 p-2 rounded-lg hover:bg-blue-50 transition-all duration-200"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
 
-        {/* Login Content */}
-        <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
-          <div className="w-full max-w-md">
-            {/* Premium Login Card */}
-            <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden">
-              {/* Card Header */}
-              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-center">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
-                  <GraduationCap className="w-8 h-8 text-white" />
+        {/* Desktop Layout Container */}
+        <div className="w-full flex lg:min-h-screen">
+          
+          {/* Left Side - Brand/Illustration (Hidden on Mobile) */}
+          <div className="hidden lg:flex lg:w-1/2 xl:w-2/5 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0">
+              <div className="absolute top-0 left-0 w-full h-full opacity-10">
+                <div className="absolute top-20 left-20 w-32 h-32 border border-white/20 rounded-full"></div>
+                <div className="absolute top-40 right-32 w-24 h-24 border border-white/15 rounded-full"></div>
+                <div className="absolute bottom-32 left-16 w-40 h-40 border border-white/10 rounded-full"></div>
+                <div className="absolute bottom-20 right-20 w-20 h-20 border border-white/25 rounded-full"></div>
+              </div>
+              
+              {/* Gradient Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-white/5 to-transparent rounded-full -translate-y-48 translate-x-48"></div>
+            </div>
+
+            {/* Content */}
+            <div className="relative z-10 flex flex-col justify-center px-12 xl:px-16 text-white">
+              {/* Logo */}
+              <div className="mb-8">
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4">
+                    <GraduationCap className="w-7 h-7 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold">MyUniOne</h1>
+                    <p className="text-blue-200 text-sm">Education Management Platform</p>
+                  </div>
                 </div>
-                <h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
-                <p className="text-blue-100">Sign in to your MyUniOne account</p>
               </div>
 
-              <div className="p-6 space-y-6">
-                {/* Role Selector */}
-                <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700">Select Your Role</label>
-                  <div className="grid grid-cols-3 gap-2 p-1 bg-gray-100 rounded-lg">
-                    {[
-                      { value: 'parent', icon: Users, label: 'Parent' },
-                      { value: 'teacher', icon: User, label: 'Teacher' },
-                      { value: 'management', icon: Shield, label: 'Admin' }
-                    ].map((role) => (
+              {/* Main Content */}
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-4xl xl:text-5xl font-bold leading-tight mb-6">
+                    Welcome to the Future of 
+                    <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                      Education Management
+                    </span>
+                  </h2>
+                  <p className="text-lg text-blue-100 leading-relaxed">
+                    Connect seamlessly with teachers, track academic progress, and stay engaged 
+                    in your educational journey with our comprehensive platform.
+                  </p>
+                </div>
+
+                {/* Features List */}
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-blue-100">Real-time academic tracking</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-blue-100">Seamless parent-teacher communication</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                      <Check className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="text-blue-100">Comprehensive performance analytics</span>
+                  </div>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="flex items-center space-x-6 pt-8">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">500+</div>
+                    <div className="text-sm text-blue-200">Schools</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">50K+</div>
+                    <div className="text-sm text-blue-200">Students</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-white">99.9%</div>
+                    <div className="text-sm text-blue-200">Uptime</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Back to Home (Desktop) */}
+              <div className="mt-auto pt-8">
+                <button
+                  onClick={() => setShowLogin(false)}
+                  className="text-blue-200 hover:text-white flex items-center gap-2 font-medium group transition-all duration-300"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
+                  Back to Home
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - Login Card */}
+          <div className="flex-1 lg:w-1/2 xl:w-3/5 flex items-center justify-center p-4 pt-20 lg:pt-4">
+            <div className="w-full max-w-md">
+              
+              {/* Login Card */}
+              <div className="bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/20 overflow-hidden animate-slideInUp">
+                
+                {/* Card Header */}
+                <div className="p-8 text-center border-b border-gray-100">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <GraduationCap className="w-8 h-8 text-white" />
+                  </div>
+                  <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h1>
+                  <p className="text-gray-600">Sign in to access your dashboard</p>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-8 space-y-6">
+                  
+                  {/* Role Selector */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-gray-700">Select Your Role</label>
+                    <div className="grid grid-cols-3 gap-2 p-1 bg-gray-50 rounded-xl">
+                      {[
+                        { value: 'parent', icon: Users, label: 'Parent' },
+                        { value: 'teacher', icon: User, label: 'Teacher' },
+                        { value: 'management', icon: Shield, label: 'Admin' }
+                      ].map((role) => (
+                        <button
+                          key={role.value}
+                          type="button"
+                          onClick={() => setUserType(role.value as any)}
+                          className={`group flex flex-col items-center gap-2 py-3 px-2 rounded-lg transition-all duration-300 ${
+                            userType === role.value
+                              ? 'bg-white text-blue-600 shadow-md scale-105 ring-2 ring-blue-100'
+                              : 'text-gray-600 hover:text-blue-600 hover:bg-white/50'
+                          }`}
+                        >
+                          <role.icon className="w-5 h-5 transition-transform group-hover:scale-110" />
+                          <span className="text-xs font-medium">{role.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Login Method Toggle */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-semibold text-gray-700">Choose Login Method</label>
+                    <div className="flex bg-gray-50 rounded-xl p-1">
                       <button
-                        key={role.value}
                         type="button"
-                        onClick={() => setUserType(role.value as any)}
-                        className={`flex flex-col items-center gap-1 py-3 px-2 rounded-md transition-all duration-200 ${
-                          userType === role.value
-                            ? 'bg-white text-blue-600 shadow-sm scale-105'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                        onClick={() => {
+                          setLoginMethod('mobile');
+                          setIsOtpSent(false);
+                        }}
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                          loginMethod === 'mobile'
+                            ? 'bg-white text-blue-600 shadow-sm ring-2 ring-blue-100'
+                            : 'text-gray-600 hover:text-blue-600'
                         }`}
                       >
-                        <role.icon className="w-4 h-4" />
-                        <span className="text-xs font-medium">{role.label}</span>
+                        <Phone className="w-4 h-4" />
+                        <span className="text-sm font-medium">Mobile OTP</span>
                       </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Login Method Toggle */}
-                <div className="space-y-3">
-                  <label className="block text-sm font-semibold text-gray-700">Login Method</label>
-                  <div className="flex bg-gray-100 rounded-lg p-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setLoginMethod('mobile');
-                        setIsOtpSent(false);
-                      }}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md transition-all duration-200 ${
-                        loginMethod === 'mobile'
-                          ? 'bg-white text-blue-600 shadow-sm'
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
-                    >
-                      <Phone className="w-4 h-4" />
-                      <span className="text-sm font-medium">Mobile OTP</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setLoginMethod('email')}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md transition-all duration-200 ${
-                        loginMethod === 'email'
-                          ? 'bg-white text-blue-600 shadow-sm'
-                          : 'text-gray-600 hover:text-gray-900'
-                      }`}
-                    >
-                      <Mail className="w-4 h-4" />
-                      <span className="text-sm font-medium">Email</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Login Forms */}
-                {loginMethod === 'mobile' ? (
-                  <form onSubmit={handleMobileLogin} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Mobile Number</label>
-                      <div className="flex">
-                        <select
-                          name="countryCode"
-                          value={formData.countryCode}
-                          onChange={handleInputChange}
-                          className="w-20 px-3 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-                        >
-                          <option value="+91">+91</option>
-                          <option value="+1">+1</option>
-                          <option value="+44">+44</option>
-                        </select>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleInputChange}
-                          placeholder="Enter mobile number"
-                          className="flex-1 px-3 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          required
-                        />
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setLoginMethod('email')}
+                        className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg transition-all duration-300 ${
+                          loginMethod === 'email'
+                            ? 'bg-white text-blue-600 shadow-sm ring-2 ring-blue-100'
+                            : 'text-gray-600 hover:text-blue-600'
+                        }`}
+                      >
+                        <Mail className="w-4 h-4" />
+                        <span className="text-sm font-medium">Email</span>
+                      </button>
                     </div>
+                  </div>
 
-                    {isOtpSent && (
-                      <div className="animate-fadeIn">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Enter OTP</label>
-                        <div className="flex gap-2 mb-4 justify-center">
-                          {formData.otp.map((digit, index) => (
-                            <input
-                              key={index}
-                              id={`otp-${index}`}
-                              type="text"
-                              value={digit}
-                              onChange={(e) => handleOtpChange(index, e.target.value)}
-                              className="w-12 h-12 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold"
-                              maxLength={1}
-                              required
-                            />
-                          ))}
-                        </div>
-                        <div className="flex items-center justify-center">
-                          {otpTimer > 0 ? (
-                            <span className="text-gray-600 text-sm">Resend OTP in {otpTimer}s</span>
-                          ) : (
-                            <button
-                              type="button"
-                              onClick={resendOtp}
-                              className="text-blue-600 hover:text-blue-800 font-medium text-sm"
-                            >
-                              Resend OTP
-                            </button>
-                          )}
+                  {/* Login Forms */}
+                  {loginMethod === 'mobile' ? (
+                    <form onSubmit={handleMobileLogin} className="space-y-5">
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Mobile Number
+                        </label>
+                        <div className="flex rounded-lg shadow-sm ring-1 ring-gray-300 focus-within:ring-2 focus-within:ring-blue-600">
+                          <select
+                            name="countryCode"
+                            value={formData.countryCode}
+                            onChange={handleInputChange}
+                            className="rounded-l-lg border-0 bg-transparent px-3 py-3 text-gray-900 focus:ring-0 sm:text-sm"
+                          >
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                          </select>
+                          <input
+                            type="tel"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleInputChange}
+                            placeholder="Enter mobile number"
+                            className="block w-full rounded-r-lg border-0 py-3 px-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                            required
+                          />
                         </div>
                       </div>
-                    )}
 
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-300"
-                    >
-                      {isLoading ? (
-                        <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                          Processing...
-                        </>
-                      ) : isOtpSent ? 'Verify OTP' : 'Send OTP'}
-                    </button>
-                  </form>
-                ) : (
-                  <form onSubmit={handleEmailLogin} className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        placeholder="Enter your email"
-                        className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        required
-                      />
-                    </div>
+                      {isOtpSent && (
+                        <div className="space-y-4 animate-fadeIn">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Enter Verification Code
+                          </label>
+                          <div className="flex gap-3 justify-center">
+                            {formData.otp.map((digit, index) => (
+                              <input
+                                key={index}
+                                id={`otp-${index}`}
+                                type="text"
+                                value={digit}
+                                onChange={(e) => handleOtpChange(index, e.target.value)}
+                                className="w-12 h-12 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent font-semibold text-lg transition-all duration-200"
+                                maxLength={1}
+                                required
+                              />
+                            ))}
+                          </div>
+                          <div className="text-center">
+                            {otpTimer > 0 ? (
+                              <p className="text-gray-600 text-sm">Resend code in {otpTimer}s</p>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={resendOtp}
+                                className="text-blue-600 hover:text-blue-800 font-medium text-sm transition-colors"
+                              >
+                                Resend Code
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      )}
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                      <div className="relative">
-                        <input
-                          type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={formData.password}
-                          onChange={handleInputChange}
-                          placeholder="Enter your password"
-                          className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-10"
-                          required
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
-                        >
-                          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                        </button>
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                      >
+                        {isLoading ? (
+                          <div className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                            {isOtpSent ? 'Verifying...' : 'Sending...'}
+                          </div>
+                        ) : (
+                          isOtpSent ? 'Verify Code' : 'Send Verification Code'
+                        )}
+                      </button>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleEmailLogin} className="space-y-5">
+                      <div className="space-y-2">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                          Email Address
+                        </label>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                          <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="Enter your email"
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 hover:border-gray-400"
+                            required
+                          />
+                        </div>
                       </div>
-                    </div>
 
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-all duration-300"
-                    >
-                      {isLoading ? (
-                        <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                          Signing in...
-                        </>
-                      ) : 'Sign In'}
-                    </button>
-                  </form>
-                )}
+                      <div className="space-y-2">
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                          Password
+                        </label>
+                        <div className="relative">
+                          <input
+                            id="password"
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            placeholder="Enter your password"
+                            className="w-full pr-10 pl-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200 hover:border-gray-400"
+                            required
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                          >
+                            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          </button>
+                        </div>
+                      </div>
 
-                {/* Footer */}
-                <div className="text-center text-sm text-gray-600 pt-4 border-t border-gray-200">
-                  <p>Secure login powered by MyUniOne</p>
+                      {/* Remember Me & Forgot Password */}
+                      <div className="flex items-center justify-between">
+                        <label className="flex items-center">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded transition-colors"
+                          />
+                          <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        </label>
+                        <a href="#" className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
+                          Forgot password?
+                        </a>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                      >
+                        {isLoading ? (
+                          <div className="flex items-center justify-center">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                            Signing in...
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-center">
+                            <span>Sign In</span>
+                            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        )}
+                      </button>
+                    </form>
+                  )}
+
+                  {/* Footer */}
+                  <div className="text-center pt-4 border-t border-gray-100">
+                    <p className="text-xs text-gray-500">
+                      Secured by MyUniOne • Your data is protected
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              {/* Mobile Back Button */}
+              <div className="lg:hidden mt-6 text-center">
+                <button
+                  onClick={() => setShowLogin(false)}
+                  className="text-gray-600 hover:text-blue-600 flex items-center gap-2 font-medium group transition-all duration-300 mx-auto"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
+                  Back to Home
+                </button>
               </div>
             </div>
           </div>
