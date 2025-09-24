@@ -313,6 +313,13 @@ const Login: React.FC = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
                 </button>
                 <button 
+                  onClick={() => setShowSchools(true)} 
+                  className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 relative group px-2 py-1"
+                >
+                  Schools
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 group-hover:w-full rounded-full"></span>
+                </button>
+                <button 
                   onClick={() => scrollToSection('contact')} 
                   className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 relative group px-2 py-1"
                 >
@@ -345,6 +352,7 @@ const Login: React.FC = () => {
                   <button onClick={() => scrollToSection('services')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors py-2">Services</button>
                   <button onClick={() => scrollToSection('solutions')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors py-2">Solutions</button>
                   <button onClick={() => scrollToSection('products')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors py-2">Products</button>
+                  <button onClick={() => setShowSchools(true)} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors py-2">Schools</button>
                   <button onClick={() => scrollToSection('contact')} className="text-left text-gray-700 hover:text-blue-600 font-medium transition-colors py-2">Contact</button>
                   <button 
                     onClick={() => setShowLogin(true)} 
@@ -545,7 +553,7 @@ const Login: React.FC = () => {
                   className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
                 >
                   <span className="flex items-center gap-2">
-                    Explore Our Solutions
+                    Learn More
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </button>
@@ -763,10 +771,6 @@ const Login: React.FC = () => {
                         </div>
                       ))}
                     </div>
-                    
-                    <button className={`w-full bg-gradient-to-r ${service.color} text-white py-3 rounded-xl font-medium hover:shadow-lg transition-all duration-300 transform hover:scale-105 opacity-0 group-hover:opacity-100`}>
-                      Learn More
-                    </button>
                   </div>
                 </div>
               ))}
@@ -862,8 +866,14 @@ const Login: React.FC = () => {
                     </div>
                   </div>
                   
-                  <button className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    Explore Platform
+                  <button 
+                    onClick={() => scrollToSection('services')}
+                    className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg group"
+                  >
+                    <span className="flex items-center gap-2">
+                      Explore Platform
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </span>
                   </button>
                 </div>
               </div>
@@ -898,10 +908,6 @@ const Login: React.FC = () => {
                       <span className="text-gray-700 font-medium">Predictive insights</span>
                     </div>
                   </div>
-                  
-                  <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    View Analytics
-                  </button>
                 </div>
                 
                 <div className="order-1 lg:order-2 relative">
@@ -1187,8 +1193,7 @@ const Login: React.FC = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-1">Email Us</h4>
-                        <p className="text-gray-600">support@myunione.edu</p>
-                        <p className="text-gray-600">sales@myunione.edu</p>
+                        <p className="text-gray-600">team@myunione.in</p>
                       </div>
                     </div>
 
@@ -1198,8 +1203,8 @@ const Login: React.FC = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900 mb-1">Call Us</h4>
-                        <p className="text-gray-600">+91 98765 43210</p>
-                        <p className="text-gray-600">+91 98765 43211</p>
+                        <p className="text-gray-600">+91 70115 65759</p>
+                        <p className="text-gray-600">+91 97172 70897</p>
                       </div>
                     </div>
 
